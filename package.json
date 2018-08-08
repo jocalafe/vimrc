@@ -1,0 +1,50 @@
+{
+  "name": "vimrc",
+  "version": "1.0.0",
+  "description": "personal vimrc based on amix <3",
+  "scripts": {
+    "install": "napa"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jocalafe/vimrc.git"
+  },
+  "keywords": [
+    "vim"
+  ],
+  "napa": {
+    "ack.vim": "mileszs/ack.vim",
+    "ale": "w0rp/ale",
+    "auto-pairs": "jiangmiao/auto-pairs",
+    "ctrlp.vim": "kien/ctrlp.vim",
+    "gruvbox": "morhetz/gruvbox",
+    "lightline-ale": "maximbaz/lightline-ale",
+    "lightline.vim": "itchyny/lightline.vim",
+    "mru.vim": "yegappan/mru",
+    "nerdtree": "scrooloose/nerdtree",
+    "nginx.vim": "chr4/nginx.vim",
+    "open_file_under_cursor.vim": "amix/open_file_under_cursor.vim",
+    "snipmate-snippets": "scrooloose/snipmate-snippets",
+    "tabular": "godlygeek/tabular",
+    "tlib": "vim-scripts/tlib",
+    "vim-addon-mw-utils": "MarcWeber/vim-addon-mw-utils",
+    "vim-commentary": "tpope/vim-commentary",
+    "vim-expand-region": "terryma/vim-expand-region",
+    "vim-flake8": "nvie/vim-flake8",
+    "vim-fugitive": "tpope/vim-fugitive",
+    "vim-gitgutter": "airblade/vim-gitgutter",
+    "vim-indent-object": "michaeljsmith/vim-indent-object",
+    "vim-markdown": "plasticboy/vim-markdown",
+    "vim-repeat": "tpope/vim-repeat",
+    "vim-snipmate": "garbas/vim-snipmate",
+    "vim-snippets": "honza/vim-snippets",
+    "vim-surround": "tpope/vim-surround",
+    "vim-yankstack": "maxbrunsfeld/vim-yankstack"
+  },
+  "author": "jocalafe",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jocalafe/vimrc/issues"
+  },
+  "homepage": "https://github.com/jocalafe/vimrc#readme"
+}
