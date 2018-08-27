@@ -4,7 +4,6 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
@@ -19,6 +18,10 @@ call pathogen#helptags()
 let MRU_Max_Entries = 400
 map <leader>f :MRU<CR>
 
+""""""""""""""""""""""""""""""
+" => GitBlame
+""""""""""""""""""""""""""""""
+map <leader>gb :Gblame<CR> 
 
 """"""""""""""""""""""""""""""
 " => YankStack
@@ -27,7 +30,6 @@ let g:yankstack_yank_keys = ['y', 'd']
 
 nmap <c-p> <Plug>yankstack_substitute_older_paste
 nmap <c-n> <Plug>yankstack_substitute_newer_paste
-
 
 """"""""""""""""""""""""""""""
 " => CTRL-P
@@ -46,13 +48,11 @@ let g:ctrlp_max_height = 20
 ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
 snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
 
-
 """"""""""""""""""""""""""""""
 " => Vim grep
 """"""""""""""""""""""""""""""
 let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
 set grepprg=/bin/grep\ -nH
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
@@ -60,8 +60,28 @@ set grepprg=/bin/grep\ -nH
 let NERDTreeShowHidden=0
 let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
+map <leader>tt <plug>NERDTreeTabsToggle<CR>
 map <leader>nn :NERDTreeToggle<cr>
 map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => DEVICONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+if exists('g:loaded_webdevicons')
+	call webdevicons#refresh()
+endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => ALE
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
+let g:ale_linters = {
+			\   'javascript': ['eslint', 'prettier'],
+			\	'php': ['phpcbf']
+			\}
+
+let g:ale_fixers = {
+			\   'javascript': ['eslint']
+			\}
+

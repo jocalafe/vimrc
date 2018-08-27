@@ -1,0 +1,1 @@
+viminfo dir for VIM
