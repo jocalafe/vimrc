@@ -21,7 +21,14 @@ map <leader>f :MRU<CR>
 """"""""""""""""""""""""""""""
 " => GitBlame
 """"""""""""""""""""""""""""""
-map <leader>gb :Gblame<CR> 
+map <leader>gb :Gblame<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Fugitive
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gs :Gstatus<CR>
+map <leader>gd :Gdiff<CR>
+map <leader>gc :Gcommit<CR>
 
 """"""""""""""""""""""""""""""
 " => YankStack
@@ -84,11 +91,4 @@ let g:ale_linters = {
 let g:ale_fixers = {
 			\   'javascript': ['eslint']
 			\}
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Fugitive
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>gs :Gstatus<CR>
-map <leader>gd :Gdiff<CR>
-map <leader>gc :Gcommit<CR>
 

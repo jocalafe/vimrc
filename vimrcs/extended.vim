@@ -17,7 +17,7 @@ autocmd! bufwritepost ~/.vim_runtime/my_configs.vim source ~/.vim_runtime/my_con
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 try
 	set undodir=~/.vim_runtime/temp_dirs/undodir
-	set viminfo=~/.vim_runtime/temp_dirs/viminfo
+	set viminfo+=n~/.vim_runtime/temp_dirs/viminfo
 	set undofile
 catch
 endtry
@@ -114,8 +114,6 @@ map <leader>cc :botright cope<cr>
 map <leader>co ggVGy:tabnew<cr>:set syntax=qf<cr>pgg
 map <leader>n :cn<cr>
 map <leader>p :cp<cr>
-
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Helper functions

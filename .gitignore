@@ -6,3 +6,4 @@ my_configs.vim
 tags
 .DS_Store
 *.tmp
+.viminf*
