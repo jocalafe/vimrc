@@ -54,7 +54,7 @@
     "vim-srcery-drk": "kudabux/vim-srcery-drk",
     "vim-twig": "evidens/vim-twig",
     "vim-vue": "posva/vim-vue",
-	"vim-sleuth": "tpope/vim-sleuth"
+    "vim-sleuth": "tpope/vim-sleuth"
   },
   "author": "jocalafe",
   "license": "ISC",
