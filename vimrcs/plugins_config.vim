@@ -5,12 +5,62 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""
-" => Load pathogen paths
+" => Vundle config
 """"""""""""""""""""""""""""""
-let s:vim_runtime = expand('<sfile>:p:h')."/.."
-call pathogen#infect(s:vim_runtime.'/node_modules/{}')
-call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
-call pathogen#helptags()
+set nocompatible              " be iMproved, required
+filetype off                  " required
+
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim_runtime/bundle/Vundle.vim
+call vundle#rc("~/.vim_runtime/bundle")
+call vundle#begin()
+
+Plugin 'tpope/vim-fugitive'
+Plugin 'mileszs/ack.vim',
+Plugin 'w0rp/ale',
+Plugin 'jiangmiao/auto-pairs',
+Plugin 'ctrlpvim/ctrlp.vim',
+Plugin 'morhetz/gruvbox',
+Plugin 'maximbaz/lightline-ale',
+Plugin 'itchyny/lightline.vim',
+Plugin 'yegappan/mru',
+Plugin 'scrooloose/nerdtree',
+Plugin 'chr4/nginx.vim',
+Plugin 'amix/open_file_under_cursor.vim',
+Plugin 'scrooloose/snipmate-snippets',
+Plugin 'godlygeek/tabular',
+Plugin 'vim-scripts/tlib',
+Plugin 'MarcWeber/vim-addon-mw-utils',
+Plugin 'tpope/vim-commentary',
+Plugin 'terryma/vim-expand-region',
+Plugin 'nvie/vim-flake8',
+Plugin 'airblade/vim-gitgutter',
+Plugin 'michaeljsmith/vim-indent-object',
+Plugin 'plasticboy/vim-markdown',
+Plugin 'tpope/vim-repeat',
+Plugin 'garbas/vim-snipmate',
+Plugin 'honza/vim-snippets',
+Plugin 'tpope/vim-surround',
+Plugin 'maxbrunsfeld/vim-yankstack',
+Plugin 'mxw/vim-jsx',
+Plugin 'junegunn/fzf.vim',
+Plugin 'shinchu/lightline-gruvbox.vim',
+Plugin 'StanAngeloff/php.vim',
+Plugin 'leafgarland/typescript-vim',
+Plugin 'ryanoasis/vim-devicons',
+Plugin 'RRethy/vim-illuminate',
+Plugin 'pangloss/vim-javascript',
+Plugin 'jistr/vim-nerdtree-tabs',
+Plugin 'tpope/vim-rhubarb',
+Plugin 'jremmen/vim-ripgrep',
+Plugin 'kudabux/vim-srcery-drk',
+Plugin 'evidens/vim-twig',
+Plugin 'posva/vim-vue',
+Plugin 'tpope/vim-sleuth'
+Plugin 'Valloric/YouCompleteMe'
+
+call vundle#end()            " required
+filetype plugin indent on    " required
 
 """"""""""""""""""""""""""""""
 " => MRU plugin

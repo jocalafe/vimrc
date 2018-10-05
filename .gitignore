@@ -1,7 +1,6 @@
 temp_dirs/undodir/*
 temp_dirs/yankring_history_v2.txt
-my_plugins
-node_modules
+bundle
 my_configs.vim
 tags
 .DS_Store
