@@ -128,7 +128,7 @@ map <leader>nf :NERDTreeFind<cr>
 " => DEVICONS
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 if exists('g:loaded_webdevicons')
-	call webdevicons#refresh()
+  call webdevicons#refresh()
 endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -136,13 +136,31 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 let g:ale_linters = {
-			\   'javascript': ['eslint', 'prettier'],
-			\	'php': ['phpcbf']
-			\}
+      \   'javascript': ['eslint', 'prettier'],
+      \	'php': ['phpcbf']
+      \}
 
 let g:ale_fixers = {
-			\   'javascript': ['eslint']
-			\}
+      \   'javascript': ['eslint']
+      \}
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => FZF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:fzf_colors =
+      \ { 'fg':      ['fg', 'Normal'],
+      \ 'bg':      ['bg', 'Normal'],
+      \ 'hl':      ['fg', 'Comment'],
+      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
+      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
+      \ 'hl+':     ['fg', 'Statement'],
+      \ 'info':    ['fg', 'PreProc'],
+      \ 'border':  ['fg', 'Ignore'],
+      \ 'prompt':  ['fg', 'Conditional'],
+      \ 'pointer': ['fg', 'Exception'],
+      \ 'marker':  ['fg', 'Keyword'],
+      \ 'spinner': ['fg', 'Label'],
+      \ 'header':  ['fg', 'Comment'] }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF Dev_Icons
@@ -171,8 +189,10 @@ function! Fzf_dev()
   endfunction
 
   call fzf#run({
-        \ 'source': <sid>files(),
-        \ 'sink':   function('s:edit_file'),
-        \ 'options': '-m -x +s',
-        \ 'down':    '40%' })
+	\ 'source': <sid>files(),
+	\ 'sink':   function('s:edit_file'),
+	\ 'options': '-m -x +s',
+	\ 'down':    '40%' })
 endfunction
+
+let g:ycm_autoclose_preview_window_after_insertion = 1
