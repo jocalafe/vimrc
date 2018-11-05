@@ -4,6 +4,8 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+set rtp+=/usr/local/opt/fzf
+
 """"""""""""""""""""""""""""""
 " => Vundle config
 """"""""""""""""""""""""""""""
@@ -15,47 +17,47 @@ set rtp+=~/.vim_runtime/bundle/Vundle.vim
 call vundle#rc("~/.vim_runtime/bundle")
 call vundle#begin()
 
+Plugin 'VundleVim/Vundle.vim'
 Plugin 'tpope/vim-fugitive'
-Plugin 'mileszs/ack.vim',
-Plugin 'w0rp/ale',
-Plugin 'jiangmiao/auto-pairs',
-Plugin 'ctrlpvim/ctrlp.vim',
-Plugin 'morhetz/gruvbox',
-Plugin 'maximbaz/lightline-ale',
-Plugin 'itchyny/lightline.vim',
-Plugin 'yegappan/mru',
-Plugin 'scrooloose/nerdtree',
-Plugin 'chr4/nginx.vim',
-Plugin 'amix/open_file_under_cursor.vim',
-Plugin 'scrooloose/snipmate-snippets',
-Plugin 'godlygeek/tabular',
-Plugin 'vim-scripts/tlib',
-Plugin 'MarcWeber/vim-addon-mw-utils',
-Plugin 'tpope/vim-commentary',
-Plugin 'terryma/vim-expand-region',
-Plugin 'nvie/vim-flake8',
-Plugin 'airblade/vim-gitgutter',
-Plugin 'michaeljsmith/vim-indent-object',
-Plugin 'plasticboy/vim-markdown',
-Plugin 'tpope/vim-repeat',
-Plugin 'garbas/vim-snipmate',
-Plugin 'honza/vim-snippets',
-Plugin 'tpope/vim-surround',
-Plugin 'maxbrunsfeld/vim-yankstack',
-Plugin 'mxw/vim-jsx',
-Plugin 'junegunn/fzf.vim',
-Plugin 'shinchu/lightline-gruvbox.vim',
-Plugin 'StanAngeloff/php.vim',
-Plugin 'leafgarland/typescript-vim',
-Plugin 'ryanoasis/vim-devicons',
-Plugin 'RRethy/vim-illuminate',
-Plugin 'pangloss/vim-javascript',
-Plugin 'jistr/vim-nerdtree-tabs',
-Plugin 'tpope/vim-rhubarb',
-Plugin 'jremmen/vim-ripgrep',
-Plugin 'kudabux/vim-srcery-drk',
-Plugin 'evidens/vim-twig',
-Plugin 'posva/vim-vue',
+Plugin 'mileszs/ack.vim'
+Plugin 'w0rp/ale'
+Plugin 'jiangmiao/auto-pairs'
+Plugin 'morhetz/gruvbox'
+Plugin 'maximbaz/lightline-ale'
+Plugin 'itchyny/lightline.vim'
+Plugin 'yegappan/mru'
+Plugin 'scrooloose/nerdtree'
+Plugin 'chr4/nginx.vim'
+Plugin 'amix/open_file_under_cursor.vim'
+Plugin 'scrooloose/snipmate-snippets'
+Plugin 'godlygeek/tabular'
+Plugin 'vim-scripts/tlib'
+Plugin 'MarcWeber/vim-addon-mw-utils'
+Plugin 'tpope/vim-commentary'
+Plugin 'terryma/vim-expand-region'
+Plugin 'nvie/vim-flake8'
+Plugin 'airblade/vim-gitgutter'
+Plugin 'michaeljsmith/vim-indent-object'
+Plugin 'plasticboy/vim-markdown'
+Plugin 'tpope/vim-repeat'
+Plugin 'garbas/vim-snipmate'
+Plugin 'honza/vim-snippets'
+Plugin 'tpope/vim-surround'
+Plugin 'maxbrunsfeld/vim-yankstack'
+Plugin 'mxw/vim-jsx'
+Plugin 'junegunn/fzf.vim'
+Plugin 'shinchu/lightline-gruvbox.vim'
+Plugin 'StanAngeloff/php.vim'
+Plugin 'leafgarland/typescript-vim'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'RRethy/vim-illuminate'
+Plugin 'pangloss/vim-javascript'
+Plugin 'jistr/vim-nerdtree-tabs'
+Plugin 'tpope/vim-rhubarb'
+Plugin 'jremmen/vim-ripgrep'
+Plugin 'kudabux/vim-srcery-drk'
+Plugin 'evidens/vim-twig'
+Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-sleuth'
 Plugin 'Valloric/YouCompleteMe'
 
@@ -142,3 +144,35 @@ let g:ale_fixers = {
 			\   'javascript': ['eslint']
 			\}
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => FZF Dev_Icons
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+function! Fzf_dev()
+  function! s:files()
+    let files = split(system($FZF_DEFAULT_COMMAND), '\n')
+    return s:prepend_icon(files)
+  endfunction
+
+  function! s:prepend_icon(candidates)
+    let result = []
+    for candidate in a:candidates
+      let filename = fnamemodify(candidate, ':p:t')
+      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
+      call add(result, printf("%s %s", icon, candidate))
+    endfor
+
+    return result
+  endfunction
+
+  function! s:edit_file(item)
+    let parts = split(a:item, ' ')
+    let file_path = get(parts, 1, '')
+    execute 'silent e' file_path
+  endfunction
+
+  call fzf#run({
+        \ 'source': <sid>files(),
+        \ 'sink':   function('s:edit_file'),
+        \ 'options': '-m -x +s',
+        \ 'down':    '40%' })
+endfunction
