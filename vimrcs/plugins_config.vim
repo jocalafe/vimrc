@@ -147,6 +147,8 @@ let g:ale_fixers = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:fzf_layout = { 'down': '~25%' }
+
 let g:fzf_colors =
       \ { 'fg':      ['fg', 'Normal'],
       \ 'bg':      ['bg', 'Normal'],
@@ -161,6 +163,8 @@ let g:fzf_colors =
       \ 'marker':  ['fg', 'Keyword'],
       \ 'spinner': ['fg', 'Label'],
       \ 'header':  ['fg', 'Comment'] }
+
+map <c-f> :Files<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF Dev_Icons
@@ -195,4 +199,8 @@ function! Fzf_dev()
 	\ 'down':    '40%' })
 endfunction
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_autoclose_preview_window_after_insertion = 1

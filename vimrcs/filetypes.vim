@@ -34,6 +34,11 @@ au FileType javascript inoremap <buffer> $r return
 au FileType javascript inoremap <buffer> $f // --- PH<esc>FP2xi
 
 """"""""""""""""""""""""""""""
+" => Java section
+"""""""""""""""""""""""""""""""
+autocmd FileType java nmap <buffer> <C-]> :YcmCompleter GoTo<CR>
+
+""""""""""""""""""""""""""""""
 " => Shell section
 """"""""""""""""""""""""""""""
 if exists('$TMUX') 
