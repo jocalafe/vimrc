@@ -40,7 +40,6 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-repeat'
-Plugin 'garbas/vim-snipmate'
 Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
 Plugin 'maxbrunsfeld/vim-yankstack'
@@ -60,6 +59,16 @@ Plugin 'evidens/vim-twig'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-sleuth'
 Plugin 'Valloric/YouCompleteMe'
+Plugin 'epilande/vim-es2015-snippets'
+Plugin 'epilande/vim-react-snippets'
+Plugin 'cristianoliveira/vim-react-html-snippets'
+Plugin 'SirVer/ultisnips'
+Plugin 'styled-components/vim-styled-components'
+Plugin 'janko/vim-test'
+Plugin 'martinda/Jenkinsfile-vim-syntax'
+Plugin 'jasoncarr0/sidewalk-colorscheme'
+Plugin 'theJian/Mogao'
+Plugin 'shapeoflambda/dark-purple.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -102,10 +111,11 @@ map <c-b> :CtrlPBuffer<cr>
 let g:ctrlp_max_height = 20
 
 """"""""""""""""""""""""""""""
-" => snipMate (beside <TAB> support <CTRL-j>)
+" => ultisnips
 """"""""""""""""""""""""""""""
-ino <c-j> <c-r>=snipMate#TriggerSnippet()<cr>
-snor <c-j> <esc>i<right><c-r>=snipMate#TriggerSnippet()<cr>
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsJumpForwardTrigger="<C-b>"
+let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 """"""""""""""""""""""""""""""
 " => Vim grep

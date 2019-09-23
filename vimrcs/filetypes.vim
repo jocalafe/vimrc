@@ -33,6 +33,8 @@ au FileType javascript imap <c-a> alert();<esc>hi
 au FileType javascript inoremap <buffer> $r return 
 au FileType javascript inoremap <buffer> $f // --- PH<esc>FP2xi
 
+autocmd FileType javascript nmap <buffer> <C-]> :YcmCompleter GoTo<CR>
+
 """"""""""""""""""""""""""""""
 " => Java section
 """""""""""""""""""""""""""""""
