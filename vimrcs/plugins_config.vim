@@ -69,6 +69,8 @@ Plugin 'martinda/Jenkinsfile-vim-syntax'
 Plugin 'jasoncarr0/sidewalk-colorscheme'
 Plugin 'theJian/Mogao'
 Plugin 'shapeoflambda/dark-purple.vim'
+Plugin 'iamcco/markdown-preview.nvim'
+Plugin 'kamykn/spelunker.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -214,3 +216,8 @@ endfunction
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:ycm_goto_buffer_command = 'new-tab'
 let g:ycm_autoclose_preview_window_after_insertion = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Spelunker
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set nospell

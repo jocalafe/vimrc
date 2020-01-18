@@ -50,3 +50,9 @@ if exists('$TMUX')
 		set term=screen-256color 
 	endif
 endif
+
+""""""""""""""""""""""""""""""
+" => Markdown
+""""""""""""""""""""""""""""""
+au! BufRead,BufNewFile *.md       set filetype=markdown
+au BufRead,BufNewFile *.md setlocal textwidth=80
