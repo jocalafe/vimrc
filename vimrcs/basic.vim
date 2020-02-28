@@ -367,3 +367,4 @@ endfunction
 :command Q q
 
 set cursorline
+set guicursor=

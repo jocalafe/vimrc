@@ -29,7 +29,6 @@ Plugin 'yegappan/mru'
 Plugin 'scrooloose/nerdtree'
 Plugin 'chr4/nginx.vim'
 Plugin 'amix/open_file_under_cursor.vim'
-Plugin 'scrooloose/snipmate-snippets'
 Plugin 'godlygeek/tabular'
 Plugin 'vim-scripts/tlib'
 Plugin 'MarcWeber/vim-addon-mw-utils'
@@ -40,29 +39,22 @@ Plugin 'airblade/vim-gitgutter'
 Plugin 'michaeljsmith/vim-indent-object'
 Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-repeat'
-Plugin 'honza/vim-snippets'
 Plugin 'tpope/vim-surround'
 Plugin 'maxbrunsfeld/vim-yankstack'
-Plugin 'mxw/vim-jsx'
 Plugin 'junegunn/fzf.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
 Plugin 'StanAngeloff/php.vim'
-Plugin 'leafgarland/typescript-vim'
+Plugin 'HerringtonDarkholme/yats.vim'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'RRethy/vim-illuminate'
-Plugin 'pangloss/vim-javascript'
+Plugin 'othree/yajs.vim'
 Plugin 'jistr/vim-nerdtree-tabs'
 Plugin 'tpope/vim-rhubarb'
 Plugin 'jremmen/vim-ripgrep'
-Plugin 'kudabux/vim-srcery-drk'
 Plugin 'evidens/vim-twig'
 Plugin 'posva/vim-vue'
 Plugin 'tpope/vim-sleuth'
-Plugin 'Valloric/YouCompleteMe'
-Plugin 'epilande/vim-es2015-snippets'
-Plugin 'epilande/vim-react-snippets'
-Plugin 'cristianoliveira/vim-react-html-snippets'
-Plugin 'SirVer/ultisnips'
+Plugin 'neoclide/coc.nvim'
 Plugin 'styled-components/vim-styled-components'
 Plugin 'janko/vim-test'
 Plugin 'martinda/Jenkinsfile-vim-syntax'
@@ -71,6 +63,15 @@ Plugin 'theJian/Mogao'
 Plugin 'shapeoflambda/dark-purple.vim'
 Plugin 'iamcco/markdown-preview.nvim'
 Plugin 'kamykn/spelunker.vim'
+Plugin 'SirVer/ultisnips'
+Plugin 'scrooloose/snipmate-snippets'
+Plugin 'honza/vim-snippets'
+Plugin 'epilande/vim-es2015-snippets'
+Plugin 'mlaursen/vim-react-snippets'
+Plugin 'jaredgorski/spacecamp'
+Plugin 'protesilaos/prot16-vim'
+Plugin 'sainnhe/sonokai'
+Plugin 'MaxMEllon/vim-jsx-pretty'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -129,12 +130,16 @@ set grepprg=/bin/grep\ -nH
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let NERDTreeShowHidden=0
-let NERDTreeIgnore = ['\.pyc$', '__pycache__']
 let g:NERDTreeWinSize=35
 map <leader>tt <plug>NERDTreeTabsToggle<CR>
-map <leader>nn :NERDTreeToggle<cr>
-map <leader>nb :NERDTreeFromBookmark<Space>
 map <leader>nf :NERDTreeFind<cr>
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => DEVICONS
@@ -221,3 +226,26 @@ let g:ycm_autoclose_preview_window_after_insertion = 1
 " => Spelunker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nospell
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => coc.vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"
+let g:coc_config_home = $HOME.'/.vim_runtime/coc'
+" Use tab for trigger completion with characters ahead and navigate.
+" Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
+inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+" Use `lp` and `ln` for navigate diagnostics
+nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
+nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
+
+" Remap keys for gotos:
+nmap <silent> <leader>ld <Plug>(coc-definition)
+nmap <silent> <leader>lt <Plug>(coc-type-definition)
+nmap <silent> <leader>li <Plug>(coc-implementation)
+nmap <silent> <leader>lf <Plug>(coc-references)
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)

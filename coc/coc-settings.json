@@ -1,0 +1,4 @@
+{
+  "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
+  "javascript.suggestionActions.enabled": false
+}
