@@ -72,6 +72,7 @@ Plugin 'jaredgorski/spacecamp'
 Plugin 'protesilaos/prot16-vim'
 Plugin 'sainnhe/sonokai'
 Plugin 'MaxMEllon/vim-jsx-pretty'
+Plugin 'liuchengxu/vim-clap'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -120,12 +121,6 @@ let g:UltiSnipsExpandTrigger="<C-l>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
-""""""""""""""""""""""""""""""
-" => Vim grep
-""""""""""""""""""""""""""""""
-let Grep_Skip_Dirs = 'RCS CVS SCCS .svn generated'
-set grepprg=/bin/grep\ -nH
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Nerd Tree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -164,6 +159,10 @@ let g:ale_fixers = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
+
+command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
+
 let g:fzf_layout = { 'down': '~25%' }
 
 let g:fzf_colors =
