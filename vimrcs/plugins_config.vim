@@ -216,12 +216,6 @@ function! Fzf_dev()
 endfunction
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => YouCompleteMe
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:ycm_goto_buffer_command = 'new-tab'
-let g:ycm_autoclose_preview_window_after_insertion = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set nospell
