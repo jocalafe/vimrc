@@ -150,7 +150,8 @@ let g:ale_linters = {
       \}
 
 let g:ale_fixers = {
-      \   'javascript': ['eslint']
+      \   'javascript': ['eslint'],
+      \   'typescript': ['eslint']
       \}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -194,9 +195,13 @@ set signcolumn=yes
 inoremap <silent><expr> <c-space> coc#refresh()
 
 let g:coc_config_home = $HOME.'/.vim_runtime/coc'
+
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
 inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " Use `lp` and `ln` for navigate diagnostics
