@@ -4,8 +4,6 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-set rtp+=/usr/local/opt/fzf
-
 """"""""""""""""""""""""""""""
 " => Vundle config
 """"""""""""""""""""""""""""""
@@ -41,7 +39,6 @@ Plugin 'plasticboy/vim-markdown'
 Plugin 'tpope/vim-repeat'
 Plugin 'tpope/vim-surround'
 Plugin 'maxbrunsfeld/vim-yankstack'
-Plugin 'junegunn/fzf.vim'
 Plugin 'shinchu/lightline-gruvbox.vim'
 Plugin 'StanAngeloff/php.vim'
 Plugin 'HerringtonDarkholme/yats.vim'
@@ -157,63 +154,11 @@ let g:ale_fixers = {
       \}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FZF
+" => Clap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let $FZF_DEFAULT_COMMAND = 'rg --files --hidden --follow --glob "!.git/*"'
-
-command! -bang -nargs=* Find call fzf#vim#grep('rg --column --line-number --no-heading --fixed-strings --ignore-case --hidden --follow --glob "!.git/*" --color "always" '.shellescape(<q-args>), 1, <bang>0)
-
-let g:fzf_layout = { 'down': '~25%' }
-
-let g:fzf_colors =
-      \ { 'fg':      ['fg', 'Normal'],
-      \ 'bg':      ['bg', 'Normal'],
-      \ 'hl':      ['fg', 'Comment'],
-      \ 'fg+':     ['fg', 'CursorLine', 'CursorColumn', 'Normal'],
-      \ 'bg+':     ['bg', 'CursorLine', 'CursorColumn'],
-      \ 'hl+':     ['fg', 'Statement'],
-      \ 'info':    ['fg', 'PreProc'],
-      \ 'border':  ['fg', 'Ignore'],
-      \ 'prompt':  ['fg', 'Conditional'],
-      \ 'pointer': ['fg', 'Exception'],
-      \ 'marker':  ['fg', 'Keyword'],
-      \ 'spinner': ['fg', 'Label'],
-      \ 'header':  ['fg', 'Comment'] }
-
-map <c-f> :Files<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FZF Dev_Icons
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-function! Fzf_dev()
-  function! s:files()
-    let files = split(system($FZF_DEFAULT_COMMAND), '\n')
-    return s:prepend_icon(files)
-  endfunction
-
-  function! s:prepend_icon(candidates)
-    let result = []
-    for candidate in a:candidates
-      let filename = fnamemodify(candidate, ':p:t')
-      let icon = WebDevIconsGetFileTypeSymbol(filename, isdirectory(filename))
-      call add(result, printf("%s %s", icon, candidate))
-    endfor
-
-    return result
-  endfunction
-
-  function! s:edit_file(item)
-    let parts = split(a:item, ' ')
-    let file_path = get(parts, 1, '')
-    execute 'silent e' file_path
-  endfunction
-
-  call fzf#run({
-	\ 'source': <sid>files(),
-	\ 'sink':   function('s:edit_file'),
-	\ 'options': '-m -x +s',
-	\ 'down':    '40%' })
-endfunction
+let g:clap_provider_grep_opts = '--hidden --follow --glob "!.git/*"'
+map <c-f> :Clap files<CR>
+map <c-g> :Clap grep2<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
