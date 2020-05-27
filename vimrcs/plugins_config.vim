@@ -70,6 +70,7 @@ Plugin 'protesilaos/prot16-vim'
 Plugin 'sainnhe/sonokai'
 Plugin 'MaxMEllon/vim-jsx-pretty'
 Plugin 'liuchengxu/vim-clap'
+Plugin 'tpope/vim-unimpaired'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
