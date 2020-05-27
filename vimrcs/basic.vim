@@ -371,3 +371,12 @@ endfunction
 
 set cursorline
 set guicursor=
+
+" visual-at from practical.vim
+"
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
+
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
