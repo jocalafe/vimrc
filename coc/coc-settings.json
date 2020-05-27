@@ -1,5 +1,6 @@
 {
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
   "javascript.suggestionActions.enabled": false,
+  "tsserver.trace.server": "verbose",
   "suggest.floatEnable": false
 }
