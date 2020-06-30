@@ -71,6 +71,7 @@ Plugin 'sainnhe/sonokai'
 Plugin 'MaxMEllon/vim-jsx-pretty'
 Plugin 'liuchengxu/vim-clap'
 Plugin 'tpope/vim-unimpaired'
+Plugin 'ap/vim-buftabline'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -92,25 +93,6 @@ map <leader>gb :Gblame<CR>
 map <leader>gs :Gstatus<CR>
 map <leader>gd :Gdiff<CR>
 map <leader>gc :Gcommit<CR>
-
-""""""""""""""""""""""""""""""
-" => YankStack
-""""""""""""""""""""""""""""""
-let g:yankstack_yank_keys = ['y', 'd']
-
-nmap <c-p> <Plug>yankstack_substitute_older_paste
-nmap <c-n> <Plug>yankstack_substitute_newer_paste
-
-""""""""""""""""""""""""""""""
-" => CTRL-P
-""""""""""""""""""""""""""""""
-let g:ctrlp_working_path_mode = 0
-
-let g:ctrlp_map = '<c-f>'
-map <leader>j :CtrlP<cr>
-map <c-b> :CtrlPBuffer<cr>
-
-let g:ctrlp_max_height = 20
 
 """"""""""""""""""""""""""""""
 " => ultisnips
@@ -162,8 +144,9 @@ let g:ale_fixers = {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Clap
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:clap_provider_grep_opts = '--hidden --follow --glob "!.git/*"'
-map <c-f> :Clap files<CR>
+let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
+let g:clap_provider_files_opts = ' -g "!.git/"'
+map <c-f> :Clap files --hidden<CR>
 map <c-g> :Clap grep2<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -231,3 +214,21 @@ nmap <leader>a  <Plug>(coc-codeaction-selected)
 nmap <leader>ac  <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Buftabline
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:buftabline_show=1
+let g:buftabline_numbers=2
+let g:buftabline_indicators='on'
+
+nmap <leader>1 <Plug>BufTabLine.Go(1)
+nmap <leader>2 <Plug>BufTabLine.Go(2)
+nmap <leader>3 <Plug>BufTabLine.Go(3)
+nmap <leader>4 <Plug>BufTabLine.Go(4)
+nmap <leader>5 <Plug>BufTabLine.Go(5)
+nmap <leader>6 <Plug>BufTabLine.Go(6)
+nmap <leader>7 <Plug>BufTabLine.Go(7)
+nmap <leader>8 <Plug>BufTabLine.Go(8)
+nmap <leader>9 <Plug>BufTabLine.Go(9)
+nmap <leader>0 <Plug>BufTabLine.Go(10)

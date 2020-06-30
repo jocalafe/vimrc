@@ -189,8 +189,8 @@ vnoremap <silent> <leader>r :call VisualSelection('replace', '')<CR>
 map <space> /
 map <c-space> ?
 
-" Disable highlight when <leader><cr> is pressed
-map <silent> <leader><cr> :noh<cr>
+" Clear highlight when <leader><cr> is pressed
+map <silent> <leader><cr> :noh<CR>
 
 " Smart way to move between windows
 map <C-j> <C-W>j
@@ -199,13 +199,6 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-map <leader>bd :Bclose<cr>:tabclose<cr>gT
-
-" Close all the buffers
-map <leader>ba :bufdo bd<cr>
-
-map <leader>l :bnext<cr>
-map <leader>h :bprevious<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -213,6 +206,13 @@ map <leader>to :tabonly<cr>
 map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
+
+" Useful mappings for managing tabs
+nnoremap <C-N> :bnext<CR>
+nnoremap <C-P> :bprev<CR>
+map <leader>ba :bufdo bd<cr>
+nnoremap <C-c> :Bclose<cr>
+
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
