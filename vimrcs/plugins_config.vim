@@ -54,10 +54,12 @@ Plugin 'mlaursen/vim-react-snippets'
 Plugin 'jaredgorski/spacecamp'
 Plugin 'protesilaos/prot16-vim'
 Plugin 'sainnhe/sonokai'
-Plugin 'liuchengxu/vim-clap'
 Plugin 'tpope/vim-unimpaired'
 Plugin 'ap/vim-buftabline'
 Plugin 'sheerun/vim-polyglot'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'junegunn/fzf'
+Plugin 'junegunn/fzf.vim'
 
 call vundle#end()            " required
 filetype plugin indent on    " required
@@ -117,14 +119,6 @@ let g:ale_fixers = {
       \ 'javascript': ['eslint'],
       \ 'typescript': ['eslint']
       \}
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"" => Clap
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
-"let g:clap_provider_files_opts = ''
-"map <c-f> :Clap files --hidden<CR>
-"map <c-g> :Clap grep2<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
@@ -209,3 +203,13 @@ nmap <leader>7 <Plug>BufTabLine.Go(7)
 nmap <leader>8 <Plug>BufTabLine.Go(8)
 nmap <leader>9 <Plug>BufTabLine.Go(9)
 nmap <leader>0 <Plug>BufTabLine.Go(10)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => FZF
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set rtp+=/usr/local/opt/fzf
+let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
+let $FZF_DEFAULT_COMMAND='rg --files --follow --hidden -g "!.git/" -g "!bundle/"'
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme TwoDark --color=always --style=header,grid --line-range :300 {}'""
+nnoremap <silent> <c-f> :Files<CR>
+nnoremap <silent> <c-g> :Rg
