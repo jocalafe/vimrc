@@ -2,5 +2,6 @@
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
   "javascript.suggestionActions.enabled": false,
   "tsserver.trace.server": "verbose",
-  "suggest.floatEnable": false
+  "suggest.floatEnable": false,
+  "diagnostic.displayByAle": true
 }

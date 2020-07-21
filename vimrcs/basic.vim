@@ -199,6 +199,11 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
+nnoremap <C-c> :Bclose<cr>
+
+" Close all but current buffer
+command! BufOnly execute '%bd|e#|bd#'
+nnoremap <leader>bo :BufOnly<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -207,12 +212,10 @@ map <leader>tc :tabclose<cr>
 map <leader>tm :tabmove 
 map <leader>t<leader> :tabnext 
 
-" Useful mappings for managing tabs
+" Useful mappings for managing buffers
 nnoremap <C-N> :bnext<CR>
 nnoremap <C-P> :bprev<CR>
 map <leader>ba :bufdo bd<cr>
-nnoremap <C-c> :Bclose<cr>
-
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1
@@ -379,4 +382,23 @@ xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
+endfunction
+
+" file is large from 10mb
+let g:LargeFile = 1024 * 1024 * 10
+augroup LargeFile 
+  autocmd BufReadPre * let f=getfsize(expand("<afile>")) | if f > g:LargeFile || f == -2 | call LargeFile() | endif
+augroup END
+
+function LargeFile()
+  " no syntax highlighting etc
+  set eventignore+=FileType
+  " save memory when other file is viewed
+  setlocal bufhidden=unload
+  " is read-only (write with :w new_filename)
+  setlocal buftype=nowrite
+  " no undo possible
+  setlocal undolevels=-1
+  " display message
+  autocmd VimEnter *  echo "The file is larger than " . (g:LargeFile / 1024 / 1024) . " MB, so some options are changed (see .vimrc for details)."
 endfunction

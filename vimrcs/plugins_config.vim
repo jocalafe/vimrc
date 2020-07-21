@@ -23,7 +23,6 @@ Plugin 'jiangmiao/auto-pairs'
 Plugin 'morhetz/gruvbox'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'itchyny/lightline.vim'
-Plugin 'yegappan/mru'
 Plugin 'scrooloose/nerdtree'
 Plugin 'amix/open_file_under_cursor.vim'
 Plugin 'tpope/vim-commentary'
@@ -63,20 +62,10 @@ Plugin 'sheerun/vim-polyglot'
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-""""""""""""""""""""""""""""""
-" => MRU plugin
-""""""""""""""""""""""""""""""
-let MRU_Max_Entries = 400
-map <leader>f :MRU<CR>
-
-""""""""""""""""""""""""""""""
-" => GitBlame
-""""""""""""""""""""""""""""""
-map <leader>gb :Gblame<CR>
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fugitive
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <leader>gb :Gblame<CR>
 map <leader>gs :Gstatus<CR>
 map <leader>gd :Gdiff<CR>
 map <leader>gc :Gcommit<CR>
@@ -119,22 +108,23 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 nmap <silent> <leader>a <Plug>(ale_next_wrap)
 let g:ale_linters = {
-      \   'javascript': ['eslint', 'prettier'],
+      \ 'javascript': ['eslint', 'prettier'],
+      \ 'typescript': ['eslint', 'prettier'],
       \	'php': ['phpcbf']
       \}
 
 let g:ale_fixers = {
-      \   'javascript': ['eslint'],
-      \   'typescript': ['eslint']
+      \ 'javascript': ['eslint'],
+      \ 'typescript': ['eslint']
       \}
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Clap
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
-let g:clap_provider_files_opts = ''
-map <c-f> :Clap files --hidden<CR>
-map <c-g> :Clap grep2<CR>
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"" => Clap
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:clap_provider_grep_opts = '-H --no-heading --vimgrep --smart-case --hidden -g "!.git/"'
+"let g:clap_provider_files_opts = ''
+"map <c-f> :Clap files --hidden<CR>
+"map <c-g> :Clap grep2<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
