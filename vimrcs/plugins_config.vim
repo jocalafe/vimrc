@@ -120,6 +120,9 @@ let g:ale_fixers = {
       \ 'typescript': ['eslint']
       \}
 
+autocmd BufEnter */dist/* let b:ale_enabled = 0
+autocmd BufEnter */node_modules/* let b:ale_enabled = 0
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -156,8 +159,11 @@ inoremap <silent><expr> <c-space> coc#refresh()
 let g:coc_config_home = $HOME.'/.vim_runtime/coc'
 " Use tab for trigger completion with characters ahead and navigate.
 " Use command ':verbose imap <tab>' to make sure tab is not mapped by other plugin.
-inoremap <expr> <TAB> pumvisible() ? "\<C-n>" : "\<TAB>"
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+inoremap <expr> <Tab> pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
+inoremap <expr> <cr> pumvisible() ? "\<C-y>" : "\<C-g>u\<CR>"
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
 " Use `lp` and `ln` for navigate diagnostics
 nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
@@ -211,5 +217,16 @@ set rtp+=/usr/local/opt/fzf
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let $FZF_DEFAULT_COMMAND='rg --files --follow --hidden -g "!.git/" -g "!bundle/"'
 let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme TwoDark --color=always --style=header,grid --line-range :300 {}'""
+function! RipgrepFzf(query, fullscreen)
+  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
+  let initial_command = printf(command_fmt, shellescape(a:query))
+  let reload_command = printf(command_fmt, '{q}')
+  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
+  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
+endfunction
+
+command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
+
 nnoremap <silent> <c-f> :Files<CR>
-nnoremap <silent> <c-g> :Rg
+nnoremap <silent> <c-g> :RG<CR>
+
