@@ -32,6 +32,8 @@
 
 set completeopt=menu,menuone,noinsert
 
+set termguicolors
+
 " Sets how many lines of history VIM has to remember
 set history=500
 
@@ -199,11 +201,10 @@ map <C-h> <C-W>h
 map <C-l> <C-W>l
 
 " Close the current buffer
-nnoremap <C-x> :Bclose<cr>
+nnoremap <C-x> :BufferClose<cr>
 
 " Close all but current buffer
-command! BufOnly execute '%bd|e#|bd#'
-nnoremap <leader>bo :BufOnly<cr>
+nnoremap <leader>bo :BufferCloseAllButCurrent<cr>
 
 " Useful mappings for managing tabs
 map <leader>tn :tabnew<cr>
@@ -213,9 +214,19 @@ map <leader>tm :tabmove
 map <leader>t<leader> :tabnext 
 
 " Useful mappings for managing buffers
-nnoremap <C-N> :bnext<CR>
-nnoremap <C-P> :bprev<CR>
+nnoremap <C-N> :BufferPrevious<CR>
+nnoremap <C-P> :BufferNext<CR>
 map <leader>ba :bufdo bd<cr>
+
+nnoremap <silent>    <leader>1 :BufferGoto 1<CR>
+nnoremap <silent>    <leader>2 :BufferGoto 2<CR>
+nnoremap <silent>    <leader>3 :BufferGoto 3<CR>
+nnoremap <silent>    <leader>4 :BufferGoto 4<CR>
+nnoremap <silent>    <leader>5 :BufferGoto 5<CR>
+nnoremap <silent>    <leader>6 :BufferGoto 6<CR>
+nnoremap <silent>    <leader>7 :BufferGoto 7<CR>
+nnoremap <silent>    <leader>8 :BufferGoto 8<CR>
+nnoremap <silent>    <leader>9 :BufferLast<CR>
 
 " Let 'tl' toggle between this and the last accessed tab
 let g:lasttab = 1

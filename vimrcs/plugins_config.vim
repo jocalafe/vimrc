@@ -5,64 +5,72 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""
+" => vim-plug config
+""""""""""""""""""""""""""""""
+" Install vim-plug if not found
+ if empty(glob('${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim'))
+   silent !sh -c 'curl -fLo ${XDG_DATA_HOME:-$HOME/.local/share}/nvim/site/autoload/plug.vim --create-dirs https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim'
+ endif
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+""""""""""""""""""""""""""""""
 " => Vundle config
 """"""""""""""""""""""""""""""
 set nocompatible              " be iMproved, required
-filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim_runtime/bundle/Vundle.vim
-call vundle#rc("~/.vim_runtime/bundle")
-call vundle#begin()
+call plug#begin('~/.vim_runtime/plugged')
 
-Plugin 'VundleVim/Vundle.vim'
-Plugin 'tpope/vim-fugitive'
-Plugin 'mileszs/ack.vim'
-Plugin 'w0rp/ale'
-Plugin 'jiangmiao/auto-pairs'
-Plugin 'morhetz/gruvbox'
-Plugin 'maximbaz/lightline-ale'
-Plugin 'itchyny/lightline.vim'
-Plugin 'scrooloose/nerdtree'
-Plugin 'amix/open_file_under_cursor.vim'
-Plugin 'tpope/vim-commentary'
-Plugin 'terryma/vim-expand-region'
-Plugin 'nvie/vim-flake8'
-Plugin 'airblade/vim-gitgutter'
-Plugin 'michaeljsmith/vim-indent-object'
-Plugin 'tpope/vim-repeat'
-Plugin 'tpope/vim-surround'
-Plugin 'shinchu/lightline-gruvbox.vim'
-Plugin 'ryanoasis/vim-devicons'
-Plugin 'RRethy/vim-illuminate'
-Plugin 'jistr/vim-nerdtree-tabs'
-Plugin 'tpope/vim-rhubarb'
-Plugin 'jremmen/vim-ripgrep'
-Plugin 'tpope/vim-sleuth'
-Plugin 'neoclide/coc.nvim'
-Plugin 'vim-test/vim-test'
-Plugin 'jasoncarr0/sidewalk-colorscheme'
-Plugin 'theJian/Mogao'
-Plugin 'shapeoflambda/dark-purple.vim'
-Plugin 'iamcco/markdown-preview.nvim'
-Plugin 'kamykn/spelunker.vim'
-Plugin 'SirVer/ultisnips'
-Plugin 'scrooloose/snipmate-snippets'
-Plugin 'honza/vim-snippets'
-Plugin 'epilande/vim-es2015-snippets'
-Plugin 'mlaursen/vim-react-snippets'
-Plugin 'jaredgorski/spacecamp'
-Plugin 'protesilaos/prot16-vim'
-Plugin 'sainnhe/sonokai'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'ap/vim-buftabline'
-Plugin 'sheerun/vim-polyglot'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plug 'VundleVim/Vundle.vim'
+Plug 'tpope/vim-fugitive'
+Plug 'mileszs/ack.vim'
+Plug 'w0rp/ale'
+Plug 'jiangmiao/auto-pairs'
+Plug 'morhetz/gruvbox'
+Plug 'maximbaz/lightline-ale'
+Plug 'itchyny/lightline.vim'
+Plug 'scrooloose/nerdtree'
+Plug 'amix/open_file_under_cursor.vim'
+Plug 'tpope/vim-commentary'
+Plug 'terryma/vim-expand-region'
+Plug 'nvie/vim-flake8'
+Plug 'airblade/vim-gitgutter'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-surround'
+Plug 'shinchu/lightline-gruvbox.vim'
+Plug 'ryanoasis/vim-devicons'
+Plug 'RRethy/vim-illuminate'
+Plug 'jistr/vim-nerdtree-tabs'
+Plug 'tpope/vim-rhubarb'
+Plug 'jremmen/vim-ripgrep'
+Plug 'tpope/vim-sleuth'
+Plug 'neoclide/coc.nvim'
+Plug 'vim-test/vim-test'
+Plug 'jasoncarr0/sidewalk-colorscheme'
+Plug 'theJian/Mogao'
+Plug 'shapeoflambda/dark-purple.vim'
+Plug 'iamcco/markdown-preview.nvim'
+Plug 'kamykn/spelunker.vim'
+Plug 'SirVer/ultisnips'
+Plug 'scrooloose/snipmate-snippets'
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'mlaursen/vim-react-snippets'
+Plug 'jaredgorski/spacecamp'
+Plug 'protesilaos/prot16-vim'
+Plug 'sainnhe/sonokai'
+Plug 'tpope/vim-unimpaired'
+Plug 'sheerun/vim-polyglot'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
+Plug 'romgrk/barbar.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
 
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fugitive
@@ -198,17 +206,6 @@ nmap <leader>qf  <Plug>(coc-fix-current)
 let g:buftabline_show=1
 let g:buftabline_numbers=2
 let g:buftabline_indicators='on'
-
-nmap <leader>1 <Plug>BufTabLine.Go(1)
-nmap <leader>2 <Plug>BufTabLine.Go(2)
-nmap <leader>3 <Plug>BufTabLine.Go(3)
-nmap <leader>4 <Plug>BufTabLine.Go(4)
-nmap <leader>5 <Plug>BufTabLine.Go(5)
-nmap <leader>6 <Plug>BufTabLine.Go(6)
-nmap <leader>7 <Plug>BufTabLine.Go(7)
-nmap <leader>8 <Plug>BufTabLine.Go(8)
-nmap <leader>9 <Plug>BufTabLine.Go(9)
-nmap <leader>0 <Plug>BufTabLine.Go(10)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF
