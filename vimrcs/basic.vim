@@ -214,8 +214,8 @@ map <leader>tm :tabmove
 map <leader>t<leader> :tabnext 
 
 " Useful mappings for managing buffers
-nnoremap <C-N> :BufferPrevious<CR>
-nnoremap <C-P> :BufferNext<CR>
+nnoremap <C-N> :BufferNext<CR>
+nnoremap <C-P> :BufferPrevious<CR>
 map <leader>ba :bufdo bd<cr>
 
 nnoremap <silent>    <leader>1 :BufferGoto 1<CR>

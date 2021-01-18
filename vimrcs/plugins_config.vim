@@ -199,11 +199,11 @@ nmap <leader>ac  <Plug>(coc-codeaction)
 nmap <leader>qf  <Plug>(coc-fix-current)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Buftabline
+" => Barbar.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:buftabline_show=1
-let g:buftabline_numbers=2
-let g:buftabline_indicators='on'
+let bufferline = {}
+let g:bufferline.auto_hide = v:true
+let g:bufferline.icons = 'both'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => FZF
