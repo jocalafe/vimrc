@@ -25,7 +25,6 @@ call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
@@ -44,7 +43,7 @@ Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sleuth'
-Plug 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-test/vim-test'
 Plug 'jasoncarr0/sidewalk-colorscheme'
 Plug 'theJian/Mogao'
@@ -62,11 +61,14 @@ Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-unimpaired'
 Plug 'sheerun/vim-polyglot'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
@@ -225,6 +227,11 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 nnoremap <silent> <c-f> :Files<CR>
 nnoremap <silent> <c-g> :RG<CR>
 
+au BufEnter * if bufname('#') =~ 'NERD_tree' && bufname('%') !~ 'NERD_tree' && winnr('$') > 1 | b# | exe "normal! \<c-w>\<c-w>" | :blast | endif
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Lualine
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
 local lualine = require('lualine')
     lualine.theme = 'gruvbox'
