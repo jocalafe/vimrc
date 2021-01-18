@@ -29,8 +29,6 @@ Plug 'mileszs/ack.vim'
 Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
-Plug 'maximbaz/lightline-ale'
-Plug 'itchyny/lightline.vim'
 Plug 'scrooloose/nerdtree'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
@@ -40,7 +38,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'shinchu/lightline-gruvbox.vim'
 Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
 Plug 'jistr/vim-nerdtree-tabs'
@@ -69,6 +66,7 @@ Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
+Plug 'hoob3rt/lualine.nvim'
 
 call plug#end()
 
@@ -227,3 +225,25 @@ command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 nnoremap <silent> <c-f> :Files<CR>
 nnoremap <silent> <c-g> :RG<CR>
 
+lua << EOF
+local lualine = require('lualine')
+    lualine.theme = 'gruvbox'
+    lualine.separator = '|'
+    lualine.sections = {
+      lualine_a = { 'mode' },
+      lualine_b = { 'branch' },
+      lualine_c = { 'filename' },
+      lualine_x = { 'filetype' },
+      lualine_z = { 'location'  },
+    }
+    lualine.inactive_sections = {
+      lualine_a = {  },
+      lualine_b = {  },
+      lualine_c = { 'filename' },
+      lualine_x = { 'location' },
+      lualine_y = {  },
+      lualine_z = {   }
+    }
+    lualine.extensions = { 'fzf' }
+    lualine.status()
+EOF
