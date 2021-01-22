@@ -69,6 +69,7 @@ Plug 'hoob3rt/lualine.nvim'
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+Plug 'liuchengxu/space-vim-dark'
 
 call plug#end()
 
@@ -234,7 +235,7 @@ au BufEnter * if bufname('#') =~ 'NERD_tree' && bufname('%') !~ 'NERD_tree' && w
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
 local lualine = require('lualine')
-    lualine.theme = 'gruvbox'
+    lualine.theme = 'onedark'
     lualine.separator = '|'
     lualine.sections = {
       lualine_a = { 'mode' },
