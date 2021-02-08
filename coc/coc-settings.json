@@ -3,5 +3,7 @@
   "javascript.suggestionActions.enabled": false,
   "tsserver.trace.server": "verbose",
   "suggest.floatEnable": false,
-  "diagnostic.displayByAle": true
+  "diagnostic.displayByAle": false,
+  "eslint.autoFixOnSave": true,
+  "coc.preferences.formatOnSaveFiletypes": ["python", "css", "markdown", "javascript", "typescript", "typescriptreact"]
 }

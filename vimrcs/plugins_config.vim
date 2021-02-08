@@ -25,7 +25,7 @@ call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-fugitive'
-Plug 'w0rp/ale'
+" Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
 Plug 'scrooloose/nerdtree'
@@ -66,10 +66,14 @@ Plug 'junegunn/fzf.vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
+Plug 'liuchengxu/space-vim-dark'
+
+"Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'liuchengxu/space-vim-dark'
+Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 
 call plug#end()
 
@@ -117,20 +121,24 @@ endif
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => ALE
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-nmap <silent> <leader>a <Plug>(ale_next_wrap)
-let g:ale_linters = {
-      \ 'javascript': ['eslint', 'prettier'],
-      \ 'typescript': ['eslint', 'prettier'],
-      \	'php': ['phpcbf']
-      \}
+" nmap <silent> <leader>a <Plug>(ale_next_wrap)
+" let g:ale_linters = {
+"       \ 'javascript': ['eslint', 'prettier'],
+"       \ 'typescript': ['eslint', 'prettier'],
+"       \	'php': ['phpcbf']
+"       \}
 
-let g:ale_fixers = {
-      \ 'javascript': ['eslint'],
-      \ 'typescript': ['eslint']
-      \}
+" let g:ale_fixers = {
+"       \ 'javascript': ['eslint', 'prettier'],
+"       \ 'typescript': ['eslint', 'prettier']
+"       \}
 
-autocmd BufEnter */dist/* let b:ale_enabled = 0
-autocmd BufEnter */node_modules/* let b:ale_enabled = 0
+" let g:ale_linter_aliases = {'typescriptreact': 'typescript'}
+
+" autocmd BufEnter */dist/* let b:ale_enabled = 0
+" autocmd BufEnter */node_modules/* let b:ale_enabled = 0
+
+" let g:ale_fix_on_save = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Spelunker
@@ -191,13 +199,8 @@ nmap <leader>rn <Plug>(coc-rename)
 xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
-" Applying codeAction to the selected region.
-" Example: `<leader>aap` for current paragraph
-xmap <leader>a  <Plug>(coc-codeaction-selected)
-nmap <leader>a  <Plug>(coc-codeaction-selected)
-
 " Remap keys for applying codeAction to the current line.
-nmap <leader>ac  <Plug>(coc-codeaction)
+nmap <leader>a <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
