@@ -28,7 +28,6 @@ Plug 'tpope/vim-fugitive'
 " Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
-Plug 'scrooloose/nerdtree'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-expand-region'
@@ -39,7 +38,6 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
-Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sleuth'
@@ -67,6 +65,7 @@ Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'liuchengxu/space-vim-dark'
+Plug 'kyazdani42/nvim-tree.lua'
 
 "Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -93,12 +92,14 @@ let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Nerd Tree
+" => NvimTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let NERDTreeShowHidden=0
-let g:NERDTreeWinSize=35
-map <leader>tt <plug>NERDTreeTabsToggle<CR>
-map <leader>nf :NERDTreeFind<cr>
+let g:nvim_tree_width=35
+let g:nvim_tree_follow = 1
+let g:nvim_tree_indent_markers = 1
+nnoremap <leader>tt :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>nf :NvimTreeFindFile<CR>
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 3
