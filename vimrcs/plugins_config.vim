@@ -25,7 +25,6 @@ call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-fugitive'
-" Plug 'w0rp/ale'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
 Plug 'amix/open_file_under_cursor.vim'
@@ -66,6 +65,8 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'liuchengxu/space-vim-dark'
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'machakann/vim-highlightedyank'
+Plug 'Luxed/ayu-vim'
 
 "Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -74,6 +75,7 @@ Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+
 
 call plug#end()
 
@@ -240,13 +242,17 @@ au BufEnter * if bufname('#') =~ 'NERD_tree' && bufname('%') !~ 'NERD_tree' && w
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
 local lualine = require('lualine')
-    lualine.theme = 'onedark'
-    lualine.separator = '|'
+    lualine.options = {
+      theme = 'gruvbox',
+      section_separators = {'', ''},
+      component_separators = {'', ''},
+      icons_enabled = true,
+    }
     lualine.sections = {
       lualine_a = { 'mode' },
       lualine_b = { 'branch' },
-      lualine_c = { 'filename' },
-      lualine_x = { 'filetype' },
+      lualine_c = {{ 'filename', full_path=true }},
+      lualine_y = { 'filetype' },
       lualine_z = { 'location'  },
     }
     lualine.inactive_sections = {

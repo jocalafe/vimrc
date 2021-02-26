@@ -394,3 +394,6 @@ vnoremap <C-j> :m '>+1<CR>gv=gv
 vnoremap <C-k> :m '<-2<CR>gv=gv
 
 set formatoptions-=cro
+
+"" Disable suspend on ctrl-z
+nnoremap <c-z> <nop>
