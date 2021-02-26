@@ -232,10 +232,25 @@ endfunction
 
 command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
 
-nnoremap <silent> <c-f> :Files<CR>
-nnoremap <silent> <c-g> :RG<CR>
+" Prevent FZF commands from opening in none modifiable buffers
+function! FZFOpen(cmd)
+    " If more than 1 window, and buffer is not modifiable or file type is
+    " NERD tree or Quickfix type
+    if winnr('$') > 1 && (!&modifiable || &ft == 'nerdtree' || &ft == 'qf')
+        " Move one window to the right, then up
+        wincmd l
+        wincmd k
+    endif
+    exe a:cmd
+endfunction
 
-au BufEnter * if bufname('#') =~ 'NERD_tree' && bufname('%') !~ 'NERD_tree' && winnr('$') > 1 | b# | exe "normal! \<c-w>\<c-w>" | :blast | endif
+nnoremap <silent> <c-f> :call FZFOpen(':Files')<CR>
+nnoremap <silent> <c-g> :call FZFOpen(':RG')<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NvimTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:nvim_tree_auto_close = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
