@@ -82,10 +82,10 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fugitive
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>gb :Gblame<CR>
-map <leader>gs :Gstatus<CR>
-map <leader>gd :Gdiff<CR>
-map <leader>gc :Gcommit<CR>
+map <leader>gb :Git blame<CR>
+map <leader>gs :Git status<CR>
+map <leader>gd :Git diff<CR>
+map <leader>gc :Git commit<CR>
 
 """"""""""""""""""""""""""""""
 " => ultisnips
