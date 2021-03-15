@@ -30,7 +30,6 @@ Plug 'morhetz/gruvbox'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
 Plug 'terryma/vim-expand-region'
-Plug 'nvie/vim-flake8'
 Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-repeat'
@@ -74,7 +73,7 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
+Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 
 
 call plug#end()
