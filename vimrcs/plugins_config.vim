@@ -23,13 +23,11 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim_runtime/plugged')
 
-Plug 'VundleVim/Vundle.vim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
-Plug 'terryma/vim-expand-region'
 Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-repeat'
@@ -43,17 +41,12 @@ Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'vim-test/vim-test'
 Plug 'jasoncarr0/sidewalk-colorscheme'
 Plug 'theJian/Mogao'
-Plug 'shapeoflambda/dark-purple.vim'
 Plug 'iamcco/markdown-preview.nvim'
-Plug 'kamykn/spelunker.vim'
 Plug 'SirVer/ultisnips'
 Plug 'scrooloose/snipmate-snippets'
 Plug 'honza/vim-snippets'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'mlaursen/vim-react-snippets'
-Plug 'jaredgorski/spacecamp'
-Plug 'protesilaos/prot16-vim'
-Plug 'sainnhe/sonokai'
 Plug 'tpope/vim-unimpaired'
 Plug 'sheerun/vim-polyglot'
 Plug 'editorconfig/editorconfig-vim'
@@ -62,12 +55,11 @@ Plug 'junegunn/fzf.vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
-Plug 'liuchengxu/space-vim-dark'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'machakann/vim-highlightedyank'
-Plug 'Luxed/ayu-vim'
+" Plug 'kamykn/spelunker.vim' " need to find a faster spelling plugin :(
 
-"Coc Extensions as plugins
+" Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
