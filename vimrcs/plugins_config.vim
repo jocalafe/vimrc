@@ -247,29 +247,28 @@ let g:nvim_tree_auto_close = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-local lualine = require('lualine')
-    lualine.options = {
-      theme = 'gruvbox',
-      section_separators = {'', ''},
-      component_separators = {'', ''},
-      icons_enabled = true,
-    }
-    lualine.sections = {
-      lualine_a = { 'mode' },
-      lualine_b = { 'branch' },
-      lualine_c = {{ 'filename', full_path=true }},
-      lualine_y = { 'filetype' },
-      lualine_z = { 'location'  },
-    }
-    lualine.inactive_sections = {
-      lualine_a = {  },
-      lualine_b = {  },
-      lualine_c = { 'filename' },
-      lualine_x = { 'location' },
-      lualine_y = {  },
-      lualine_z = {   }
-    }
-    lualine.extensions = { 'fzf' }
-    lualine.status()
-EOF
+let g:lualine = {
+  \'options' : {
+  \  'theme' : 'gruvbox',
+  \  'section_separators' : ['', ''],
+  \  'component_separators' : ['', ''],
+  \  'icons_enabled' : v:true,
+  \},
+  \'sections' : {
+  \  'lualine_a' : [ ['mode', {'upper': v:true,},], ],
+  \  'lualine_b' : [ ['branch', {'icon': '',}, ], ],
+  \  'lualine_c' : [ ['filename', {'file_status': v:true, 'full_path': v:true},], ],
+  \  'lualine_x' : [ 'filetype' ],
+  \  'lualine_z' : [ 'location'  ],
+  \},
+  \'inactive_sections' : {
+  \  'lualine_a' : [  ],
+  \  'lualine_b' : [  ],
+  \  'lualine_c' : [ 'filename' ],
+  \  'lualine_x' : [ 'location' ],
+  \  'lualine_y' : [  ],
+  \  'lualine_z' : [  ],
+  \},
+  \'extensions' : [ 'fzf' ],
+  \}
+lua require("lualine").setup()
