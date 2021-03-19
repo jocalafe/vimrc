@@ -1,3 +1,5 @@
+let g:loaded_python_provider = 0
+
 set encoding=UTF-8
 set number
 set mouse=a

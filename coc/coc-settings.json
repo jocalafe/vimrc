@@ -6,5 +6,7 @@
   "diagnostic.displayByAle": false,
   "eslint.autoFixOnSave": true,
   "coc.preferences.formatOnSaveFiletypes": ["python", "css", "markdown", "javascript", "typescript", "typescriptreact"],
-  "python.linting.flake8Enabled": true
+  "python.linting.flake8Enabled": true,
+  "python.linting.pylintEnabled": false,
+  "python.linting.enabled": true
 }
