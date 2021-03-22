@@ -250,8 +250,8 @@ let g:nvim_tree_auto_close = 1
 let g:lualine = {
   \'options' : {
   \  'theme' : 'gruvbox',
-  \  'section_separators' : ['', ''],
-  \  'component_separators' : ['', ''],
+  \  'section_separators' : ['', ''],
+  \  'component_separators' : ['', ''],
   \  'icons_enabled' : v:true,
   \},
   \'sections' : {
