@@ -213,7 +213,7 @@ let g:bufferline.icons = 'both'
 set rtp+=/usr/local/opt/fzf
 let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
 let $FZF_DEFAULT_COMMAND='rg --files --follow --hidden -g "!.git/" -g "!bundle/"'
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --theme TwoDark --color=always --style=header,grid --line-range :300 {}'""
+let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'""
 function! RipgrepFzf(query, fullscreen)
   let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
   let initial_command = printf(command_fmt, shellescape(a:query))
@@ -247,28 +247,31 @@ let g:nvim_tree_auto_close = 1
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:lualine = {
-  \'options' : {
-  \  'theme' : 'gruvbox',
-  \  'section_separators' : ['', ''],
-  \  'component_separators' : ['', ''],
-  \  'icons_enabled' : v:true,
-  \},
-  \'sections' : {
-  \  'lualine_a' : [ ['mode', {'upper': v:true,},], ],
-  \  'lualine_b' : [ ['branch', {'icon': '',}, ], ],
-  \  'lualine_c' : [ ['filename', {'file_status': v:true, 'full_path': v:true},], ],
-  \  'lualine_x' : [ 'filetype' ],
-  \  'lualine_z' : [ 'location'  ],
-  \},
-  \'inactive_sections' : {
-  \  'lualine_a' : [  ],
-  \  'lualine_b' : [  ],
-  \  'lualine_c' : [ 'filename' ],
-  \  'lualine_x' : [ 'location' ],
-  \  'lualine_y' : [  ],
-  \  'lualine_z' : [  ],
-  \},
-  \'extensions' : [ 'fzf' ],
-  \}
-lua require("lualine").setup()
+lua << EOF
+require('lualine').setup {
+  options = {
+    icons_enabled = true,
+    theme = 'gruvbox',
+    section_separators = { '', '' },
+    component_separators = { '', '' },
+    disabled_filetypes = {}
+  },
+  sections = {
+    lualine_a = {'mode'},
+    lualine_b = {'branch'},
+    lualine_c = {{'filename', file_status=true, path=1 }},
+    lualine_x = {'filetype'},
+    lualine_z = {'location'}
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = {'filename'},
+    lualine_x = {'location'},
+    lualine_y = {},
+    lualine_z = {}
+  },
+  tabline = {},
+  extensions = {'nvim-tree'}
+}
+EOF
