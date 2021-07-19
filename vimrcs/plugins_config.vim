@@ -243,6 +243,7 @@ nnoremap <silent> <c-g> :call FZFOpen(':RG')<CR>
 " => NvimTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:nvim_tree_auto_close = 1
+let g:nvim_tree_disable_netrw = 0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
