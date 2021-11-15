@@ -42,8 +42,6 @@ Plug 'vim-test/vim-test'
 Plug 'jasoncarr0/sidewalk-colorscheme'
 Plug 'theJian/Mogao'
 Plug 'iamcco/markdown-preview.nvim'
-Plug 'SirVer/ultisnips'
-Plug 'scrooloose/snipmate-snippets'
 Plug 'honza/vim-snippets'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'mlaursen/vim-react-snippets'
@@ -57,6 +55,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'hoob3rt/lualine.nvim'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'machakann/vim-highlightedyank'
+Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
 " Plug 'kamykn/spelunker.vim' " need to find a faster spelling plugin :(
 
 " Coc Extensions as plugins
@@ -67,6 +66,7 @@ Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
 Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
+Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 
 
 call plug#end()
@@ -82,15 +82,20 @@ map <leader>gc :Git commit<CR>
 """"""""""""""""""""""""""""""
 " => ultisnips
 """"""""""""""""""""""""""""""
-let g:UltiSnipsExpandTrigger="<C-l>"
+" let g:UltiSnipsExpandTrigger="<C-l>"
 let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => NvimTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require'nvim-tree'.setup {
+  disable_netrw = false
+}
+EOF
+
 let g:nvim_tree_width=35
-let g:nvim_tree_follow = 1
 let g:nvim_tree_indent_markers = 1
 nnoremap <leader>tt :NvimTreeToggle<CR>
 nnoremap <leader>r :NvimTreeRefresh<CR>
@@ -196,10 +201,39 @@ xmap <leader>f  <Plug>(coc-format-selected)
 nmap <leader>f  <Plug>(coc-format-selected)
 
 " Remap keys for applying codeAction to the current line.
-nmap <leader>a <Plug>(coc-codeaction)
+nmap <leader>do <Plug>(coc-codeaction)
 " Apply AutoFix to problem on the current line.
 nmap <leader>qf  <Plug>(coc-fix-current)
 
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
+  endif
+endfunction
+
+" Show documentation on hover
+function! ShowDocIfNoDiagnostic(timer_id)
+  if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+    silent call CocActionAsync('doHover')
+  endif
+endfunction
+
+function! s:show_hover_doc()
+  call timer_start(500, 'ShowDocIfNoDiagnostic')
+endfunction
+
+" autocmd CursorHoldI * :call <SID>show_hover_doc()
+" autocmd CursorHold * :call <SID>show_hover_doc()
+
+" Show diagnostics list
+nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Barbar.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -240,12 +274,6 @@ nnoremap <silent> <c-f> :call FZFOpen(':Files')<CR>
 nnoremap <silent> <c-g> :call FZFOpen(':RG')<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NvimTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:nvim_tree_auto_close = 1
-let g:nvim_tree_disable_netrw = 0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
@@ -276,3 +304,5 @@ require('lualine').setup {
   extensions = {'nvim-tree'}
 }
 EOF
+
+imap <C-l> <Plug>(coc-snippets-expand)
