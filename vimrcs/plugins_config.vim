@@ -1,9 +1,3 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Important:
-"       This requries that you install https://github.com/amix/vimrc !
-"
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 """"""""""""""""""""""""""""""
 " => vim-plug config
 """"""""""""""""""""""""""""""
@@ -23,6 +17,10 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim_runtime/plugged')
 
+Plug 'nvim-lua/plenary.nvim'
+Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
 Plug 'morhetz/gruvbox'
@@ -48,15 +46,12 @@ Plug 'mlaursen/vim-react-snippets'
 Plug 'tpope/vim-unimpaired'
 Plug 'sheerun/vim-polyglot'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
-Plug 'junegunn/fzf.vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
-Plug 'hoob3rt/lualine.nvim'
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-lualine/lualine.nvim'
 Plug 'machakann/vim-highlightedyank'
-Plug 'styled-components/vim-styled-components', { 'branch': 'main' }
-" Plug 'kamykn/spelunker.vim' " need to find a faster spelling plugin :(
+Plug 'rebelot/kanagawa.nvim'
+Plug 'folke/tokyonight.nvim'
 
 " Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -65,7 +60,6 @@ Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'pappasam/coc-jedi', { 'do': 'yarn install --frozen-lockfile && yarn build' }
 Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
 
 
@@ -87,27 +81,6 @@ let g:UltiSnipsJumpForwardTrigger="<C-b>"
 let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NvimTree
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-lua << EOF
-require'nvim-tree'.setup {
-  disable_netrw = false
-}
-EOF
-
-let g:nvim_tree_width=35
-let g:nvim_tree_indent_markers = 1
-nnoremap <leader>tt :NvimTreeToggle<CR>
-nnoremap <leader>r :NvimTreeRefresh<CR>
-nnoremap <leader>nf :NvimTreeFindFile<CR>
-
-let g:netrw_banner = 0
-let g:netrw_liststyle = 3
-let g:netrw_browse_split = 4
-let g:netrw_altv = 1
-let g:netrw_winsize = 25
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => auto-pairs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:AutoPairsMultilineClose=0
@@ -118,33 +91,6 @@ let g:AutoPairsMultilineClose=0
 if exists('g:loaded_webdevicons')
   call webdevicons#refresh()
 endif
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => ALE
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" nmap <silent> <leader>a <Plug>(ale_next_wrap)
-" let g:ale_linters = {
-"       \ 'javascript': ['eslint', 'prettier'],
-"       \ 'typescript': ['eslint', 'prettier'],
-"       \	'php': ['phpcbf']
-"       \}
-
-" let g:ale_fixers = {
-"       \ 'javascript': ['eslint', 'prettier'],
-"       \ 'typescript': ['eslint', 'prettier']
-"       \}
-
-" let g:ale_linter_aliases = {'typescriptreact': 'typescript'}
-
-" autocmd BufEnter */dist/* let b:ale_enabled = 0
-" autocmd BufEnter */node_modules/* let b:ale_enabled = 0
-
-" let g:ale_fix_on_save = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Spelunker
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set nospell
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.vim
@@ -234,6 +180,7 @@ endfunction
 
 " Show diagnostics list
 nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
+imap <C-l> <Plug>(coc-snippets-expand)
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Barbar.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -242,36 +189,11 @@ let g:bufferline.auto_hide = v:true
 let g:bufferline.icons = 'both'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => FZF
+" => Telescope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-set rtp+=/usr/local/opt/fzf
-let g:fzf_layout = { 'window': { 'width': 0.9, 'height': 0.6 } }
-let $FZF_DEFAULT_COMMAND='rg --files --follow --hidden -g "!.git/" -g "!bundle/"'
-let $FZF_DEFAULT_OPTS="--ansi --preview-window 'right:60%' --layout reverse --margin=1,4 --preview 'bat --color=always --style=header,grid --line-range :300 {}'""
-function! RipgrepFzf(query, fullscreen)
-  let command_fmt = 'rg --column --line-number --no-heading --color=always --smart-case -- %s || true'
-  let initial_command = printf(command_fmt, shellescape(a:query))
-  let reload_command = printf(command_fmt, '{q}')
-  let spec = {'options': ['--phony', '--query', a:query, '--bind', 'change:reload:'.reload_command]}
-  call fzf#vim#grep(initial_command, 1, fzf#vim#with_preview(spec), a:fullscreen)
-endfunction
-
-command! -nargs=* -bang RG call RipgrepFzf(<q-args>, <bang>0)
-
-" Prevent FZF commands from opening in none modifiable buffers
-function! FZFOpen(cmd)
-    " If more than 1 window, and buffer is not modifiable or file type is
-    " NERD tree or Quickfix type
-    if winnr('$') > 1 && (!&modifiable || &ft == 'nerdtree' || &ft == 'qf')
-        " Move one window to the right, then up
-        wincmd l
-        wincmd k
-    endif
-    exe a:cmd
-endfunction
-
-nnoremap <silent> <c-f> :call FZFOpen(':Files')<CR>
-nnoremap <silent> <c-g> :call FZFOpen(':RG')<CR>
+nnoremap <silent> <c-f> :Telescope find_files<CR>
+nnoremap <silent> <c-g> :Telescope live_grep<CR>
+nnoremap z= :Telescope spell_suggest<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Lualine
@@ -280,7 +202,7 @@ lua << EOF
 require('lualine').setup {
   options = {
     icons_enabled = true,
-    theme = 'gruvbox',
+    theme = 'tokyonight',
     section_separators = { '', '' },
     component_separators = { '', '' },
     disabled_filetypes = {}
@@ -305,4 +227,147 @@ require('lualine').setup {
 }
 EOF
 
-imap <C-l> <Plug>(coc-snippets-expand)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => NeoTree
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+local highlights = require('neo-tree.ui.highlights')
+
+require("neo-tree").setup {
+  -- The default_source is the one used when calling require('neo-tree').show()
+  -- without a source argument.
+  default_source = "filesystem",
+  popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
+  -- "NC" is a special style that works well with NormalNC set
+  enable_git_status = true,
+  enable_diagnostics = true,
+  filesystem = {
+    window = {
+      -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup
+      -- for possible options. These can also be functions that return these
+      -- options.
+      position = "left", -- left, right, float
+      width = 40, -- applies to left and right positions
+      -- settings that apply to float position only
+      popop = {
+        size = {
+          height = "80%",
+          width = "50%"
+        },
+        position = "50%" -- 50% means center it
+        -- you can also specify border here, if you want a different setting from
+        -- the global popup_border_style.
+      },
+      -- Mappings for tree window. See |Neo-tree-Mappings| for built-in 
+      -- commands. You can also create your own commands by providing a 
+      -- function instead of a string. See the built-in commands for examples.
+      mappings = {
+        ["<2-LeftMouse>"] = "open",
+        ["<cr>"] = "open",
+        ["S"] = "open_split",
+        ["s"] = "open_vsplit",
+        ["<bs>"] = "navigate_up",
+        ["."] = "set_root",
+        ["H"] = "toggle_hidden",
+        ["I"] = "toggle_gitignore",
+        ["R"] = "refresh",
+        ["/"] = "filter_as_you_type",
+        ["f"] = "filter_on_submit",
+        ["<C-x>"] = "clear_filter",
+        ["a"] = "add",
+        ["d"] = "delete",
+        ["r"] = "rename",
+        ["c"] = "copy_to_clipboard",
+        ["x"] = "cut_to_clipboard",
+        ["p"] = "paste_from_clipboard",
+      }
+    },
+    search_limit = 50, -- max number of search results when using filters
+    filters = {
+      show_hidden = false,
+      respect_gitignore = true,
+    },
+    bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
+    before_render = function(state)
+      -- This function is called after the file system has been scanned,
+      -- but before the tree is rendered. You can use this to gather extra
+      -- data that can be used in the renderers.
+      local utils = require("neo-tree.utils")
+      state.git_status_lookup = utils.get_git_status()
+    end,
+    -- The components section provides custom functions that may be called by 
+    -- the renderers below. Each componment is a function that takes the
+    -- following arguments:
+    --      config: A table containing the configuration provided by the user
+    --              when declaring this component in their renderer config.
+    --      node:   A NuiNode object for the currently focused node.
+    --      state:  The current state of the source providing the items.
+    --
+    -- The function should return either a table, or a list of tables, each of which
+    -- contains the following keys:
+    --    text:      The text to display for this item.
+    --    highlight: The highlight group to apply to this text.
+    components = {
+      hello_node = function (config, node, state)
+        local text = "Hello " .. node.name
+        if state.search_term then
+          text = string.format("Hello '%s' in %s", state.search_term, node.name)
+        end
+        return {
+          text = text,
+          highlight = config.highlight or highlights.FILE_NAME,
+        }
+      end
+    },
+    -- This section provides the renderers that will be used to render the tree.
+    -- The first level is the node type.
+    -- For each node type, you can specify a list of components to render.
+    -- Components are rendered in the order they are specified.
+    -- The first field in each component is the name of the function to call.
+    -- The rest of the fields are passed to the function as the "config" argument.
+    renderers = {
+      directory = {
+        {
+            "icon",
+            folder_closed = "",
+            folder_open = "",
+            padding = " ",
+        },
+        { "current_filter" },
+        { "name" },
+        {
+          "clipboard",
+          highlight = "NeoTreeDimText"
+        },
+        { "diagnostics", errors_only = true },
+        --{ "git_status" },
+      },
+      file = {
+        {
+          "icon",
+          default = "*",
+          padding = " ",
+        },
+        --{ "hello_node", highlight = "Normal" }, -- For example, don't actually
+        -- use this!
+        {
+          "name",
+          use_git_status_colors = true
+        },
+        {
+          "clipboard",
+          highlight = "NeoTreeDimText"
+        },
+        { "diagnostics" },
+        {
+          "git_status",
+          highlight = "NeoTreeDimText"
+        }
+      },
+    }
+  }
+}
+EOF
+
+nnoremap <leader>tt :NeoTreeFloatToggle<CR>
+nnoremap <leader>nf :NeoTreeRevealToggle<CR>
