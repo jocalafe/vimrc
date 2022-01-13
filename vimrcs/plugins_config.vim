@@ -191,6 +191,30 @@ let g:bufferline.icons = 'both'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Telescope
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require('telescope').setup {
+  defaults = {
+    mappings = {
+      i = {
+        ["<C-j>"] = 'move_selection_next',
+        ["<C-k>"] = 'move_selection_previous',
+      }
+    }
+  },
+  pickers = {
+    find_files = {
+      theme = "dropdown",
+    },
+    live_grep = {
+      theme = "dropdown",
+    },
+    spell_suggest = {
+      theme = "cursor",
+    }
+  }
+}
+EOF
+
 nnoremap <silent> <c-f> :Telescope find_files<CR>
 nnoremap <silent> <c-g> :Telescope live_grep<CR>
 nnoremap z= :Telescope spell_suggest<CR>
