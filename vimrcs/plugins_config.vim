@@ -194,6 +194,7 @@ let g:bufferline.icons = 'both'
 lua << EOF
 require('telescope').setup {
   defaults = {
+    file_ignore_patterns = { "^.git/" },
     mappings = {
       i = {
         ["<C-j>"] = 'move_selection_next',
@@ -215,8 +216,8 @@ require('telescope').setup {
 }
 EOF
 
-nnoremap <silent> <c-f> :Telescope find_files<CR>
-nnoremap <silent> <c-g> :Telescope live_grep<CR>
+nnoremap <silent> <c-f> :Telescope find_files hidden=true<CR>
+nnoremap <silent> <c-g> :Telescope live_grep hidden=true<CR>
 nnoremap z= :Telescope spell_suggest<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -394,4 +395,4 @@ require("neo-tree").setup {
 EOF
 
 nnoremap <leader>tt :NeoTreeFloatToggle<CR>
-nnoremap <leader>nf :NeoTreeRevealToggle<CR>
+nnoremap <leader>nf :NeoTreeFloatToggle<CR>
