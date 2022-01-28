@@ -320,30 +320,6 @@ require("neo-tree").setup {
       local utils = require("neo-tree.utils")
       state.git_status_lookup = utils.get_git_status()
     end,
-    -- The components section provides custom functions that may be called by 
-    -- the renderers below. Each componment is a function that takes the
-    -- following arguments:
-    --      config: A table containing the configuration provided by the user
-    --              when declaring this component in their renderer config.
-    --      node:   A NuiNode object for the currently focused node.
-    --      state:  The current state of the source providing the items.
-    --
-    -- The function should return either a table, or a list of tables, each of which
-    -- contains the following keys:
-    --    text:      The text to display for this item.
-    --    highlight: The highlight group to apply to this text.
-    components = {
-      hello_node = function (config, node, state)
-        local text = "Hello " .. node.name
-        if state.search_term then
-          text = string.format("Hello '%s' in %s", state.search_term, node.name)
-        end
-        return {
-          text = text,
-          highlight = config.highlight or highlights.FILE_NAME,
-        }
-      end
-    },
     -- This section provides the renderers that will be used to render the tree.
     -- The first level is the node type.
     -- For each node type, you can specify a list of components to render.
@@ -396,3 +372,9 @@ EOF
 
 nnoremap <leader>tt :NeoTreeFloatToggle<CR>
 nnoremap <leader>nf :NeoTreeFloatToggle<CR>
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => MarkdownPreview
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+call mkdp#util#install()
