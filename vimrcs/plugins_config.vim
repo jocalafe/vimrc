@@ -19,6 +19,7 @@ call plug#begin('~/.vim_runtime/plugged')
 
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'nvim-neo-tree/neo-tree.nvim'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
@@ -44,7 +45,6 @@ Plug 'honza/vim-snippets'
 Plug 'epilande/vim-es2015-snippets'
 Plug 'mlaursen/vim-react-snippets'
 Plug 'tpope/vim-unimpaired'
-Plug 'sheerun/vim-polyglot'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
@@ -378,3 +378,32 @@ nnoremap <leader>nf :NeoTreeFloatToggle<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 call mkdp#util#install()
+
+"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Treesitter
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    disable = {},
+  },
+  indent = {
+    enable = true,
+    disable = {},
+  },
+  ensure_installed = {
+    "vim",
+    "lua",
+    "json",
+    "yaml",
+    "html",
+    "scss",
+    "css",
+    "javascript",
+    "typescript",
+    "tsx",
+  },
+}
+EOF
