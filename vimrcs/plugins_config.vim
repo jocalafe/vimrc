@@ -32,7 +32,6 @@ Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'ryanoasis/vim-devicons'
 Plug 'RRethy/vim-illuminate'
 Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
@@ -84,13 +83,6 @@ let g:UltiSnipsJumpBackwardTrigger="<C-z>"
 " => auto-pairs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:AutoPairsMultilineClose=0
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => DEVICONS
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-if exists('g:loaded_webdevicons')
-  call webdevicons#refresh()
-endif
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.vim
@@ -181,6 +173,18 @@ endfunction
 " Show diagnostics list
 nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
 imap <C-l> <Plug>(coc-snippets-expand)
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => DEVICONS
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua << EOF
+require'nvim-web-devicons'.setup {
+ -- globally enable default icons (default to false)
+ -- will get overriden by `get_icons` option
+ default = true;
+}
+EOF
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Barbar.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
