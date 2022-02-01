@@ -2,11 +2,7 @@
   "javascript.format.insertSpaceAfterOpeningAndBeforeClosingJsxExpressionBraces": true,
   "javascript.suggestionActions.enabled": false,
   "tsserver.trace.server": "verbose",
-  "suggest.floatEnable": false,
-  "diagnostic.displayByAle": false,
+  "diagnostic.checkCurrentLine": true,
   "eslint.autoFixOnSave": true,
-  "coc.preferences.formatOnSaveFiletypes": ["python", "css", "markdown", "javascript", "typescript", "typescriptreact", "javascriptreact"],
-  "python.linting.flake8Enabled": true,
-  "python.linting.pylintEnabled": false,
-  "python.linting.enabled": true
+  "coc.preferences.formatOnSaveFiletypes": ["python", "css", "scss", "markdown", "javascript", "typescript", "typescriptreact", "javascriptreact"]
 }
