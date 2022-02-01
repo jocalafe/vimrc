@@ -17,10 +17,11 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim_runtime/plugged')
 
+Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-neo-tree/neo-tree.nvim'
+Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
@@ -47,7 +48,6 @@ Plug 'mlaursen/vim-react-snippets'
 Plug 'tpope/vim-unimpaired'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romgrk/barbar.nvim'
-Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'rebelot/kanagawa.nvim'
@@ -253,130 +253,32 @@ require('lualine').setup {
 EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => NeoTree
+" => NvimTree
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua << EOF
-local highlights = require('neo-tree.ui.highlights')
-
-require("neo-tree").setup {
-  -- The default_source is the one used when calling require('neo-tree').show()
-  -- without a source argument.
-  default_source = "filesystem",
-  popup_border_style = "NC", -- "double", "none", "rounded", "shadow", "single" or "solid"
-  -- "NC" is a special style that works well with NormalNC set
-  enable_git_status = true,
-  enable_diagnostics = true,
-  filesystem = {
-    window = {
-      -- see https://github.com/MunifTanjim/nui.nvim/tree/main/lua/nui/popup
-      -- for possible options. These can also be functions that return these
-      -- options.
-      position = "left", -- left, right, float
-      width = 40, -- applies to left and right positions
-      -- settings that apply to float position only
-      popop = {
-        size = {
-          height = "80%",
-          width = "50%"
-        },
-        position = "50%" -- 50% means center it
-        -- you can also specify border here, if you want a different setting from
-        -- the global popup_border_style.
-      },
-      -- Mappings for tree window. See |Neo-tree-Mappings| for built-in 
-      -- commands. You can also create your own commands by providing a 
-      -- function instead of a string. See the built-in commands for examples.
-      mappings = {
-        ["<2-LeftMouse>"] = "open",
-        ["<cr>"] = "open",
-        ["S"] = "open_split",
-        ["s"] = "open_vsplit",
-        ["<bs>"] = "navigate_up",
-        ["."] = "set_root",
-        ["H"] = "toggle_hidden",
-        ["I"] = "toggle_gitignore",
-        ["R"] = "refresh",
-        ["/"] = "filter_as_you_type",
-        ["f"] = "filter_on_submit",
-        ["<C-x>"] = "clear_filter",
-        ["a"] = "add",
-        ["d"] = "delete",
-        ["r"] = "rename",
-        ["c"] = "copy_to_clipboard",
-        ["x"] = "cut_to_clipboard",
-        ["p"] = "paste_from_clipboard",
-      }
-    },
-    search_limit = 50, -- max number of search results when using filters
-    filters = {
-      show_hidden = false,
-      respect_gitignore = true,
-    },
-    bind_to_cwd = true, -- true creates a 2-way binding between vim's cwd and neo-tree's root
-    before_render = function(state)
-      -- This function is called after the file system has been scanned,
-      -- but before the tree is rendered. You can use this to gather extra
-      -- data that can be used in the renderers.
-      local utils = require("neo-tree.utils")
-      state.git_status_lookup = utils.get_git_status()
-    end,
-    -- This section provides the renderers that will be used to render the tree.
-    -- The first level is the node type.
-    -- For each node type, you can specify a list of components to render.
-    -- Components are rendered in the order they are specified.
-    -- The first field in each component is the name of the function to call.
-    -- The rest of the fields are passed to the function as the "config" argument.
-    renderers = {
-      directory = {
-        {
-            "icon",
-            folder_closed = "",
-            folder_open = "",
-            padding = " ",
-        },
-        { "current_filter" },
-        { "name" },
-        {
-          "clipboard",
-          highlight = "NeoTreeDimText"
-        },
-        { "diagnostics", errors_only = true },
-        --{ "git_status" },
-      },
-      file = {
-        {
-          "icon",
-          default = "*",
-          padding = " ",
-        },
-        --{ "hello_node", highlight = "Normal" }, -- For example, don't actually
-        -- use this!
-        {
-          "name",
-          use_git_status_colors = true
-        },
-        {
-          "clipboard",
-          highlight = "NeoTreeDimText"
-        },
-        { "diagnostics" },
-        {
-          "git_status",
-          highlight = "NeoTreeDimText"
-        }
-      },
-    }
+require'nvim-tree'.setup {
+  disable_netrw = false,
+  diagnostics = {
+    enable = true,
   }
 }
 EOF
 
-nnoremap <leader>tt :NeoTreeFloatToggle<CR>
-nnoremap <leader>nf :NeoTreeFloatToggle<CR>
-"
+let g:nvim_tree_width=35
+let g:nvim_tree_indent_markers = 1
+nnoremap <leader>tt :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>nf :NvimTreeFindFile<CR>
+
+let g:netrw_banner = 0
+let g:netrw_liststyle = 3
+let g:netrw_browse_split = 4
+let g:netrw_altv = 1
+let g:netrw_winsize = 25
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => MarkdownPreview
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
 call mkdp#util#install()
 
 "
