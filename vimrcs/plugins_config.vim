@@ -25,7 +25,7 @@ Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
 Plug 'jiangmiao/auto-pairs'
-Plug 'morhetz/gruvbox'
+Plug 'ellisonleao/gruvbox.nvim'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
 Plug 'airblade/vim-gitgutter'
@@ -37,9 +37,7 @@ Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sleuth'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'vim-test/vim-test'
-Plug 'jasoncarr0/sidewalk-colorscheme'
-Plug 'theJian/Mogao'
+Plug 'cocopon/iceberg.vim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'honza/vim-snippets'
 Plug 'epilande/vim-es2015-snippets'
@@ -51,6 +49,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'machakann/vim-highlightedyank'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'folke/tokyonight.nvim'
+Plug 'marko-cerovac/material.nvim'
 
 " Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -107,7 +106,7 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=yes
+set signcolumn=number
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()
