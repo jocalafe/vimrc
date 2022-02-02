@@ -24,11 +24,9 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
-Plug 'jiangmiao/auto-pairs'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
-Plug 'airblade/vim-gitgutter'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -50,6 +48,9 @@ Plug 'machakann/vim-highlightedyank'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'folke/tokyonight.nvim'
 Plug 'marko-cerovac/material.nvim'
+Plug 'lewis6991/gitsigns.nvim'
+Plug 'windwp/nvim-autopairs'
+Plug 'windwp/nvim-ts-autotag'
 
 " Coc Extensions as plugins
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
@@ -70,18 +71,6 @@ map <leader>gb :Git blame<CR>
 map <leader>gs :Git status<CR>
 map <leader>gd :Git diff<CR>
 map <leader>gc :Git commit<CR>
-
-""""""""""""""""""""""""""""""
-" => ultisnips
-""""""""""""""""""""""""""""""
-" let g:UltiSnipsExpandTrigger="<C-l>"
-let g:UltiSnipsJumpForwardTrigger="<C-b>"
-let g:UltiSnipsJumpBackwardTrigger="<C-z>"
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => auto-pairs
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let g:AutoPairsMultilineClose=0
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.vim
@@ -290,6 +279,9 @@ call mkdp#util#install()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
+  autotag = {
+    enable = true,
+  },
   highlight = {
     enable = true,
     disable = {},
@@ -311,4 +303,31 @@ require'nvim-treesitter.configs'.setup {
     "tsx",
   },
 }
+EOF
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => GitSigns
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+require('gitsigns').setup({
+  signcolumn = true,  -- Toggle with `:Gitsigns toggle_signs`
+  numhl      = false, -- Toggle with `:Gitsigns toggle_numhl`
+  linehl     = false, -- Toggle with `:Gitsigns toggle_linehl`
+  word_diff  = false, -- Toggle with `:Gitsigns toggle_word_diff`
+  current_line_blame = true, -- Toggle with `:Gitsigns toggle_current_line_blame`
+  current_line_blame_opts = {
+    virt_text = true,
+    virt_text_pos = 'eol', -- 'eol' | 'overlay' | 'right_align'
+    delay = 1000,
+    ignore_whitespace = false,
+  },
+})
+EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => autopairs
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+lua <<EOF
+require('nvim-autopairs').setup{}
 EOF
