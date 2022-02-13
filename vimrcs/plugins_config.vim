@@ -37,8 +37,6 @@ Plug 'tpope/vim-sleuth'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'cocopon/iceberg.vim'
 Plug 'iamcco/markdown-preview.nvim'
-Plug 'honza/vim-snippets'
-Plug 'epilande/vim-es2015-snippets'
 Plug 'mlaursen/vim-react-snippets'
 Plug 'tpope/vim-unimpaired'
 Plug 'editorconfig/editorconfig-vim'
@@ -69,8 +67,7 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 map <leader>gb :Git blame<CR>
 map <leader>gs :Git status<CR>
-map <leader>gd :Git diff<CR>
-map <leader>gc :Git commit<CR>
+map <leader>gd :Gitsigns diffthis<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => coc.vim
@@ -95,7 +92,7 @@ set shortmess+=c
 
 " Always show the signcolumn, otherwise it would shift the text each time
 " diagnostics appear/become resolved.
-set signcolumn=number
+set signcolumn=yes
 
 " Use <c-space> to trigger completion.
 inoremap <silent><expr> <c-space> coc#refresh()

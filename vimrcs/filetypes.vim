@@ -33,3 +33,5 @@ endif
 """"""""""""""""""""""""""""""
 au! BufRead,BufNewFile *.md       set filetype=markdown
 au BufRead,BufNewFile *.md setlocal textwidth=80
+
+autocmd FileType scss setl iskeyword+=@-@
