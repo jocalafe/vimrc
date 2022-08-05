@@ -184,7 +184,9 @@ let g:bufferline.icons = 'both'
 lua << EOF
 require('telescope').setup {
   defaults = {
-    file_ignore_patterns = { "^.git/" },
+    file_ignore_patterns = {
+      ".git/",
+    },
     mappings = {
       i = {
         ["<C-j>"] = 'move_selection_next',
@@ -198,6 +200,9 @@ require('telescope').setup {
     },
     live_grep = {
       theme = "dropdown",
+      additional_args = function(opts)
+        return {"--hidden"}
+      end
     },
     spell_suggest = {
       theme = "cursor",
