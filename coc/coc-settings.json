@@ -4,6 +4,7 @@
   "tsserver.trace.server": "verbose",
   "diagnostic.checkCurrentLine": true,
   "eslint.autoFixOnSave": true,
+  "suggest.noselect": true,
   "coc.preferences.formatOnSaveFiletypes": [
     "python",
     "css",
