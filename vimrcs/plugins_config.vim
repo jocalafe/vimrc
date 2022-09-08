@@ -43,7 +43,6 @@ Plug 'RRethy/vim-illuminate'
 Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sleuth'
-" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'cocopon/iceberg.vim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'tpope/vim-unimpaired'
@@ -58,17 +57,6 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'windwp/nvim-ts-autotag'
 
-" Coc Extensions as plugins
-" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-" Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
-
-
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -77,107 +65,6 @@ call plug#end()
 map <leader>gb :Git blame<CR>
 map <leader>gs :Git status<CR>
 map <leader>gd :Gitsigns diffthis<CR>
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => coc.vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"
-" TextEdit might fail if hidden is not set.
-" set hidden
-
-" " Some servers have issues with backup files, see #649.
-" set nobackup
-" set nowritebackup
-
-" " Give more space for displaying messages.
-" set cmdheight=2
-
-" " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" " delays and poor user experience.
-" set updatetime=300
-
-" " Don't pass messages to |ins-completion-menu|.
-" set shortmess+=c
-
-" " Always show the signcolumn, otherwise it would shift the text each time
-" " diagnostics appear/become resolved.
-" set signcolumn=yes
-
-" " Use <c-space> to trigger completion.
-" inoremap <silent><expr> <c-space> coc#refresh()
-
-" let g:coc_config_home = $HOME.'/.vim_runtime/coc'
-
-" function! CheckBackspace() abort
-"   let col = col('.') - 1
-"   return !col || getline('.')[col - 1]  =~# '\s'
-" endfunction
-
-" " Use tab for trigger completion with characters ahead and navigate.
-" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" " other plugin before putting this into your config.
-" inoremap <silent><expr> <TAB>
-"       \ coc#pum#visible() ? coc#pum#next(1):
-"       \ CheckBackspace() ? "\<Tab>" :
-"       \ coc#refresh()
-" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
-
-" " Make <CR> to accept selected completion item or notify coc.nvim to format
-" " <C-g>u breaks current undo, please make your own choice.
-" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#refresh() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
-
-" " Use `lp` and `ln` for navigate diagnostics
-" nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
-" nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
-
-" " Remap keys for gotos:
-" nmap <silent> <leader>ld <Plug>(coc-definition)
-" nmap <silent> <leader>lt <Plug>(coc-type-definition)
-" nmap <silent> <leader>li <Plug>(coc-implementation)
-" nmap <silent> <leader>lf <Plug>(coc-references)
-
-" " Remap for rename current word
-" nmap <leader>rn <Plug>(coc-rename)
-
-" " Formatting selected code.
-" xmap <leader>f  <Plug>(coc-format-selected)
-" nmap <leader>f  <Plug>(coc-format-selected)
-
-" " Remap keys for applying codeAction to the current line.
-" nmap <leader>do <Plug>(coc-codeaction)
-" " Apply AutoFix to problem on the current line.
-" nmap <leader>qf  <Plug>(coc-fix-current)
-
-" " Use K to show documentation in preview window.
-" nnoremap <silent> K :call <SID>show_documentation()<CR>
-
-" function! s:show_documentation()
-"   if (index(['vim','help'], &filetype) >= 0)
-"     execute 'h '.expand('<cword>')
-"   elseif (coc#rpc#ready())
-"     call CocActionAsync('doHover')
-"   else
-"     execute '!' . &keywordprg . " " . expand('<cword>')
-"   endif
-" endfunction
-
-" " Show documentation on hover
-" function! ShowDocIfNoDiagnostic(timer_id)
-"   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-"     silent call CocActionAsync('doHover')
-"   endif
-" endfunction
-
-" function! s:show_hover_doc()
-"   call timer_start(500, 'ShowDocIfNoDiagnostic')
-" endfunction
-
-" " autocmd CursorHoldI * :call <SID>show_hover_doc()
-" " autocmd CursorHold * :call <SID>show_hover_doc()
-
-" " Show diagnostics list
-" nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
-" imap <C-l> <Plug>(coc-snippets-expand)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => DEVICONS
