@@ -17,6 +17,15 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim_runtime/plugged')
 
+Plug 'neovim/nvim-lspconfig'
+Plug 'rafamadriz/friendly-snippets'
+Plug 'L3MON4D3/LuaSnip'
+Plug 'saadparwaiz1/cmp_luasnip'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/nvim-cmp'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'MunifTanjim/nui.nvim'
@@ -34,10 +43,9 @@ Plug 'RRethy/vim-illuminate'
 Plug 'tpope/vim-rhubarb'
 Plug 'jremmen/vim-ripgrep'
 Plug 'tpope/vim-sleuth'
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'cocopon/iceberg.vim'
 Plug 'iamcco/markdown-preview.nvim'
-Plug 'mlaursen/vim-react-snippets'
 Plug 'tpope/vim-unimpaired'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romgrk/barbar.nvim'
@@ -51,14 +59,14 @@ Plug 'windwp/nvim-autopairs'
 Plug 'windwp/nvim-ts-autotag'
 
 " Coc Extensions as plugins
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
-Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-css', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-eslint', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-prettier', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-highlight', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'neoclide/coc-snippets', {'do': 'yarn install --frozen-lockfile'}
+" Plug 'iamcco/coc-spell-checker', {'do': 'yarn install --frozen-lockfile'}
 
 
 call plug#end()
@@ -75,101 +83,101 @@ map <leader>gd :Gitsigns diffthis<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "
 " TextEdit might fail if hidden is not set.
-set hidden
+" set hidden
 
-" Some servers have issues with backup files, see #649.
-set nobackup
-set nowritebackup
+" " Some servers have issues with backup files, see #649.
+" set nobackup
+" set nowritebackup
 
-" Give more space for displaying messages.
-set cmdheight=2
+" " Give more space for displaying messages.
+" set cmdheight=2
 
-" Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
-" delays and poor user experience.
-set updatetime=300
+" " Having longer updatetime (default is 4000 ms = 4 s) leads to noticeable
+" " delays and poor user experience.
+" set updatetime=300
 
-" Don't pass messages to |ins-completion-menu|.
-set shortmess+=c
+" " Don't pass messages to |ins-completion-menu|.
+" set shortmess+=c
 
-" Always show the signcolumn, otherwise it would shift the text each time
-" diagnostics appear/become resolved.
-set signcolumn=yes
+" " Always show the signcolumn, otherwise it would shift the text each time
+" " diagnostics appear/become resolved.
+" set signcolumn=yes
 
-" Use <c-space> to trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+" " Use <c-space> to trigger completion.
+" inoremap <silent><expr> <c-space> coc#refresh()
 
-let g:coc_config_home = $HOME.'/.vim_runtime/coc'
+" let g:coc_config_home = $HOME.'/.vim_runtime/coc'
 
-function! CheckBackspace() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
+" function! CheckBackspace() abort
+"   let col = col('.') - 1
+"   return !col || getline('.')[col - 1]  =~# '\s'
+" endfunction
 
-" Use tab for trigger completion with characters ahead and navigate.
-" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
-" other plugin before putting this into your config.
-inoremap <silent><expr> <TAB>
-      \ coc#pum#visible() ? coc#pum#next(1):
-      \ CheckBackspace() ? "\<Tab>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
+" " Use tab for trigger completion with characters ahead and navigate.
+" " NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" " other plugin before putting this into your config.
+" inoremap <silent><expr> <TAB>
+"       \ coc#pum#visible() ? coc#pum#next(1):
+"       \ CheckBackspace() ? "\<Tab>" :
+"       \ coc#refresh()
+" inoremap <expr><S-TAB> coc#pum#visible() ? coc#pum#prev(1) : "\<C-h>"
 
-" Make <CR> to accept selected completion item or notify coc.nvim to format
-" <C-g>u breaks current undo, please make your own choice.
-inoremap <silent><expr> <CR> coc#pum#visible() ? coc#refresh() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+" " Make <CR> to accept selected completion item or notify coc.nvim to format
+" " <C-g>u breaks current undo, please make your own choice.
+" inoremap <silent><expr> <CR> coc#pum#visible() ? coc#refresh() : "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-" Use `lp` and `ln` for navigate diagnostics
-nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
-nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
+" " Use `lp` and `ln` for navigate diagnostics
+" nmap <silent> <leader>lp <Plug>(coc-diagnostic-prev)
+" nmap <silent> <leader>ln <Plug>(coc-diagnostic-next)
 
-" Remap keys for gotos:
-nmap <silent> <leader>ld <Plug>(coc-definition)
-nmap <silent> <leader>lt <Plug>(coc-type-definition)
-nmap <silent> <leader>li <Plug>(coc-implementation)
-nmap <silent> <leader>lf <Plug>(coc-references)
+" " Remap keys for gotos:
+" nmap <silent> <leader>ld <Plug>(coc-definition)
+" nmap <silent> <leader>lt <Plug>(coc-type-definition)
+" nmap <silent> <leader>li <Plug>(coc-implementation)
+" nmap <silent> <leader>lf <Plug>(coc-references)
 
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
+" " Remap for rename current word
+" nmap <leader>rn <Plug>(coc-rename)
 
-" Formatting selected code.
-xmap <leader>f  <Plug>(coc-format-selected)
-nmap <leader>f  <Plug>(coc-format-selected)
+" " Formatting selected code.
+" xmap <leader>f  <Plug>(coc-format-selected)
+" nmap <leader>f  <Plug>(coc-format-selected)
 
-" Remap keys for applying codeAction to the current line.
-nmap <leader>do <Plug>(coc-codeaction)
-" Apply AutoFix to problem on the current line.
-nmap <leader>qf  <Plug>(coc-fix-current)
+" " Remap keys for applying codeAction to the current line.
+" nmap <leader>do <Plug>(coc-codeaction)
+" " Apply AutoFix to problem on the current line.
+" nmap <leader>qf  <Plug>(coc-fix-current)
 
-" Use K to show documentation in preview window.
-nnoremap <silent> K :call <SID>show_documentation()<CR>
+" " Use K to show documentation in preview window.
+" nnoremap <silent> K :call <SID>show_documentation()<CR>
 
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
+" function! s:show_documentation()
+"   if (index(['vim','help'], &filetype) >= 0)
+"     execute 'h '.expand('<cword>')
+"   elseif (coc#rpc#ready())
+"     call CocActionAsync('doHover')
+"   else
+"     execute '!' . &keywordprg . " " . expand('<cword>')
+"   endif
+" endfunction
 
-" Show documentation on hover
-function! ShowDocIfNoDiagnostic(timer_id)
-  if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
-    silent call CocActionAsync('doHover')
-  endif
-endfunction
+" " Show documentation on hover
+" function! ShowDocIfNoDiagnostic(timer_id)
+"   if (coc#float#has_float() == 0 && CocHasProvider('hover') == 1)
+"     silent call CocActionAsync('doHover')
+"   endif
+" endfunction
 
-function! s:show_hover_doc()
-  call timer_start(500, 'ShowDocIfNoDiagnostic')
-endfunction
+" function! s:show_hover_doc()
+"   call timer_start(500, 'ShowDocIfNoDiagnostic')
+" endfunction
 
-" autocmd CursorHoldI * :call <SID>show_hover_doc()
-" autocmd CursorHold * :call <SID>show_hover_doc()
+" " autocmd CursorHoldI * :call <SID>show_hover_doc()
+" " autocmd CursorHold * :call <SID>show_hover_doc()
 
-" Show diagnostics list
-nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
-imap <C-l> <Plug>(coc-snippets-expand)
+" " Show diagnostics list
+" nnoremap <silent> <leader>d :<C-u>CocList diagnostics<cr>
+" imap <C-l> <Plug>(coc-snippets-expand)
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => DEVICONS
@@ -345,3 +353,195 @@ EOF
 lua <<EOF
 require('nvim-autopairs').setup{}
 EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => nvim-lspconfig
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => nvim-cmp
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set completeopt=menu,menuone,noselect
+
+lua <<EOF
+require("luasnip.loaders.from_vscode").lazy_load()
+
+-- Configure diagnostic display
+vim.diagnostic.config({
+    virtual_text = {
+        -- Only display errors w/ virtual text
+        severity = vim.diagnostic.severity.ERROR,
+        -- Prepend with diagnostic source if there is more than one attached to the buffer
+        -- (e.g. (eslint) Error: blah blah blah)
+        source = "if_many",
+        signs = false,
+    },
+    float = {
+        severity_sort = true,
+        source = "if_many",
+        border = "rounded",
+        prefix = function(diagnostic)
+            local diag_to_format = {
+                [vim.diagnostic.severity.ERROR] = { "Error", "LspDiagnosticsDefaultError" },
+                [vim.diagnostic.severity.WARN] = { "Warning", "LspDiagnosticsDefaultWarning" },
+                [vim.diagnostic.severity.INFO] = { "Info", "LspDiagnosticsDefaultInfo" },
+                [vim.diagnostic.severity.HINT] = { "Hint", "LspDiagnosticsDefaultHint" },
+            }
+            local res = diag_to_format[diagnostic.severity]
+            return string.format("(%s) ", res[1]), res[2]
+        end,
+    },
+    severity_sort = true,
+})
+vim.o.updatetime = 250
+vim.cmd [[autocmd! CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- Mappings.
+-- See `:help vim.diagnostic.*` for documentation on any of the below functions
+local opts = { noremap=true, silent=true }
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
+vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
+vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
+
+-- Use an on_attach function to only map the following keys
+-- after the language server attaches to the current buffer
+local on_attach = function(client, bufnr)
+  -- Enable completion triggered by <c-x><c-o>
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Mappings.
+  -- See `:help vim.lsp.*` for documentation on any of the below functions
+  local bufopts = { noremap=true, silent=true, buffer=bufnr }
+  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
+  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
+  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
+  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
+  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
+  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
+  vim.keymap.set('n', '<leader>wl', function()
+    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  end, bufopts)
+  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
+  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
+  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
+  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
+  vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
+end
+
+  -- Setup nvim-cmp.
+  local cmp = require'cmp'
+  local luasnip = require'luasnip'
+
+  local has_words_before = function()
+    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+  end
+
+  cmp.setup({
+    snippet = {
+      -- REQUIRED - you must specify a snippet engine
+      expand = function(args)
+        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+      end,
+    },
+    window = {
+      -- completion = cmp.config.window.bordered(),
+      -- documentation = cmp.config.window.bordered(),
+    },
+    mapping = cmp.mapping.preset.insert({
+      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<C-e>'] = cmp.mapping.abort(),
+      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+      ["<Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_next_item()
+        elseif luasnip.expand_or_jumpable() then
+          luasnip.expand_or_jump()
+        elseif has_words_before() then
+          cmp.complete()
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+      ["<S-Tab>"] = cmp.mapping(function(fallback)
+        if cmp.visible() then
+          cmp.select_prev_item()
+        elseif luasnip.jumpable(-1) then
+          luasnip.jump(-1)
+        else
+          fallback()
+        end
+      end, { "i", "s" }),
+    }),
+    sources = cmp.config.sources({
+      { name = 'nvim_lsp' },
+      -- { name = 'vsnip' }, -- For vsnip users.
+      { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+      { name = 'path' },
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Set configuration for specific filetype.
+  cmp.setup.filetype('gitcommit', {
+    sources = cmp.config.sources({
+      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+    }, {
+      { name = 'buffer' },
+    })
+  })
+
+  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline('/', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = {
+      { name = 'buffer' }
+    }
+  })
+
+  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+  cmp.setup.cmdline(':', {
+    mapping = cmp.mapping.preset.cmdline(),
+    sources = cmp.config.sources({
+      { name = 'path' }
+    }, {
+      { name = 'cmdline' }
+    })
+  })
+
+  -- Setup lspconfig.
+  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+  capabilities.textDocument.completion.completionItem.snippetSupport = true
+  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+  require'lspconfig'.tsserver.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+  require'lspconfig'.eslint.setup{
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+  require'lspconfig'.cssls.setup{
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+  require'lspconfig'.html.setup{
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+  require'lspconfig'.jsonls.setup {
+    capabilities = capabilities,
+    on_attach = on_attach,
+  }
+
+EOF
+
+autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
