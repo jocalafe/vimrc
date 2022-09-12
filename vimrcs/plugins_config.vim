@@ -17,6 +17,8 @@ set nocompatible              " be iMproved, required
 
 call plug#begin('~/.vim_runtime/plugged')
 
+Plug 'williamboman/mason.nvim'
+Plug 'williamboman/mason-lspconfig.nvim'
 Plug 'neovim/nvim-lspconfig'
 Plug 'rafamadriz/friendly-snippets'
 Plug 'L3MON4D3/LuaSnip'
@@ -428,6 +430,29 @@ end
     capabilities = capabilities,
     on_attach = on_attach,
   }
+  require'lspconfig'.yamlls.setup {
+    settings = {
+      yaml = {
+        schemaStore = {
+          url = "https://www.schemastore.org/api/json/catalog.json",
+          enable = true,
+        }
+      }
+    },
+    on_attach = on_attach
+  }
+
+  require("mason").setup()
+  require("mason-lspconfig").setup({
+    ensure_installed = {
+      "tsserver",
+      "eslint",
+      "cssls",
+      "html",
+      "jsonls",
+      "yamlls"
+    }
+  })
 
 EOF
 
