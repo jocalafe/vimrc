@@ -35,19 +35,17 @@ Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'kyazdani42/nvim-tree.lua'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'tpope/vim-fugitive'
-Plug 'ellisonleao/gruvbox.nvim'
-Plug 'amix/open_file_under_cursor.vim'
 Plug 'tpope/vim-commentary'
-Plug 'michaeljsmith/vim-indent-object'
+Plug 'tpope/vim-sleuth'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
-Plug 'RRethy/vim-illuminate'
 Plug 'tpope/vim-rhubarb'
+Plug 'tpope/vim-unimpaired'
+Plug 'michaeljsmith/vim-indent-object'
+Plug 'RRethy/vim-illuminate'
 Plug 'jremmen/vim-ripgrep'
-Plug 'tpope/vim-sleuth'
 Plug 'cocopon/iceberg.vim'
 Plug 'iamcco/markdown-preview.nvim'
-Plug 'tpope/vim-unimpaired'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'romgrk/barbar.nvim'
 Plug 'nvim-lualine/lualine.nvim'
@@ -58,6 +56,7 @@ Plug 'marko-cerovac/material.nvim'
 Plug 'lewis6991/gitsigns.nvim'
 Plug 'windwp/nvim-autopairs'
 Plug 'windwp/nvim-ts-autotag'
+Plug 'github/copilot.vim'
 
 call plug#end()
 
@@ -82,9 +81,62 @@ EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Barbar.nvim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let bufferline = {}
-let g:bufferline.auto_hide = v:true
-let g:bufferline.icons = 'both'
+
+lua << EOF
+vim.g.barbar_auto_setup = false -- disable auto-setup
+require'barbar'.setup {
+  -- WARN: do not copy everything below into your config!
+  --       It is just an example of what configuration options there are.
+  --       The defaults are suitable for most people.
+
+  -- Enable/disable animations
+  animation = false,
+
+  -- Enable/disable auto-hiding the tab bar when there is a single buffer
+  auto_hide = true,
+
+  -- Enable/disable current/total tabpages indicator (top right corner)
+  tabpages = true,
+
+  -- Enables/disable clickable tabs
+  --  - left-click: go to buffer
+  --  - middle-click: delete buffer
+  clickable = true,
+
+  -- Excludes buffers from the tabline
+  -- exclude_ft = {'javascript', 'qf'},
+
+  icons = {
+    -- Configure the base icons on the bufferline.
+    buffer_index = true,
+    buffer_number = false,
+    button = '',
+    -- Enables / disables diagnostic symbols
+    diagnostics = {
+      [vim.diagnostic.severity.ERROR] = {enabled = true, icon = 'ﬀ'},
+      [vim.diagnostic.severity.WARN] = {enabled = false},
+      [vim.diagnostic.severity.INFO] = {enabled = false},
+      [vim.diagnostic.severity.HINT] = {enabled = false},
+    },
+    filetype = {
+      -- Sets the icon's highlight group.
+      -- If false, will use nvim-web-devicons colors
+      custom_colors = false,
+
+      -- Requires `nvim-web-devicons` if `true`
+      enabled = true,
+    },
+    separator = {left = '▎', right = ''},
+
+    -- Configure the icons on the bufferline based on the visibility of a buffer.
+    -- Supports all the base icon options, plus `modified` and `pinned`.
+    alternate = {filetype = {enabled = false}},
+    current = {buffer_index = true},
+    inactive = {button = ''},
+    visible = {modified = {buffer_number = false}},
+  },
+}
+EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Telescope
@@ -97,11 +149,11 @@ require('telescope').setup {
     },
     mappings = {
       i = {
-        ["<C-j>"] = 'move_selection_next',
-        ["<C-k>"] = 'move_selection_previous',
+	["<C-j>"] = 'move_selection_next',
+	["<C-k>"] = 'move_selection_previous',
       }
-    }
-  },
+      }
+    },
   pickers = {
     find_files = {
       theme = "dropdown",
@@ -115,8 +167,8 @@ require('telescope').setup {
     spell_suggest = {
       theme = "cursor",
     }
+    }
   }
-}
 EOF
 
 nnoremap <silent> <c-f> :Telescope find_files hidden=true<CR>
@@ -193,13 +245,18 @@ require'nvim-treesitter.configs'.setup {
   autotag = {
     enable = true,
   },
-  highlight = {
-    enable = true,
-    disable = {},
-  },
   indent = {
     enable = true,
-    disable = {},
+  },
+  highlight = {
+    enable = true,
+    disable = function(lang, buf)
+      local max_filesize = 100 * 1024 -- 100 KB
+      local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+      if ok and stats and stats.size > max_filesize then
+          return true
+      end
+    end,
   },
   ensure_installed = {
     "vim",
@@ -289,171 +346,185 @@ local opts = { noremap=true, silent=true }
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, opts)
 vim.keymap.set('n', '[d', vim.diagnostic.goto_prev, opts)
 vim.keymap.set('n', ']d', vim.diagnostic.goto_next, opts)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, opts)
 
 -- Use an on_attach function to only map the following keys
 -- after the language server attaches to the current buffer
-local on_attach = function(client, bufnr)
-  -- Enable completion triggered by <c-x><c-o>
-  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+vim.api.nvim_create_autocmd('LspAttach', {
+  group = vim.api.nvim_create_augroup('UserLspConfig', {}),
+  callback = function(ev)
+    -- Enable completion triggered by <c-x><c-o>
+    vim.bo[ev.buf].omnifunc = 'v:lua.vim.lsp.omnifunc'
 
-  -- Mappings.
-  -- See `:help vim.lsp.*` for documentation on any of the below functions
-  local bufopts = { noremap=true, silent=true, buffer=bufnr }
-  vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, bufopts)
-  vim.keymap.set('n', 'gd', vim.lsp.buf.definition, bufopts)
-  vim.keymap.set('n', 'K', vim.lsp.buf.hover, bufopts)
-  vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, bufopts)
-  vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, bufopts)
-  vim.keymap.set('n', '<leader>wa', vim.lsp.buf.add_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wr', vim.lsp.buf.remove_workspace_folder, bufopts)
-  vim.keymap.set('n', '<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-  end, bufopts)
-  vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, bufopts)
-  vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, bufopts)
-  vim.keymap.set('n', '<leader>ca', vim.lsp.buf.code_action, bufopts)
-  vim.keymap.set('n', 'gr', vim.lsp.buf.references, bufopts)
-  vim.keymap.set('n', '<leader>f', vim.lsp.buf.formatting, bufopts)
+    -- Buffer local mappings.
+    -- See `:help vim.lsp.*` for documentation on any of the below functions
+    local opts = { buffer = ev.buf }
+    vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, opts)
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
+    vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
+    vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
+    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
+    vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
+    vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
+    vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
+    vim.keymap.set('n', '<leader>qf', function()
+      vim.lsp.buf.code_action({ only = {"quickfix"}, apply = true })
+    end, bufopts)
+    vim.keymap.set('n', 'gr', vim.lsp.buf.references, opts)
+    vim.keymap.set('n', '<leader>F', function()
+      vim.lsp.buf.format { async = true }
+    end, opts)
+  end,
+})
+
+-- Setup nvim-cmp.
+local cmp = require'cmp'
+local luasnip = require'luasnip'
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
 end
 
-  -- Setup nvim-cmp.
-  local cmp = require'cmp'
-  local luasnip = require'luasnip'
+cmp.setup({
+  snippet = {
+    -- REQUIRED - you must specify a snippet engine
+    expand = function(args)
+      -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+      require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+      -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+      -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+    end,
+  },
+  window = {
+    -- completion = cmp.config.window.bordered(),
+    -- documentation = cmp.config.window.bordered(),
+  },
+  mapping = cmp.mapping.preset.insert({
+    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+    ['<C-Space>'] = cmp.mapping.complete(),
+    ['<C-e>'] = cmp.mapping.abort(),
+    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+--    ["<Tab>"] = cmp.mapping(function(fallback)
+--      if cmp.visible() then
+--        cmp.select_next_item()
+--      elseif luasnip.expand_or_jumpable() then
+--        luasnip.expand_or_jump()
+--      elseif has_words_before() then
+--        cmp.complete()
+--      else
+--        fallback()
+--      end
+--    end, { "i", "s" }),
+    ["<S-Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif luasnip.jumpable(-1) then
+        luasnip.jump(-1)
+      else
+        fallback()
+      end
+    end, { "i", "s" }),
+  }),
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'luasnip' }, -- For luasnip users.
+    { name = 'path' },
+  }, {
+    { name = 'buffer' },
+  })
+})
 
-  local has_words_before = function()
-    local line, col = unpack(vim.api.nvim_win_get_cursor(0))
-    return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
-  end
+-- Set configuration for specific filetype.
+cmp.setup.filetype('gitcommit', {
+  sources = cmp.config.sources({
+    { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
+  }, {
+    { name = 'buffer' },
+  })
+})
 
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        -- vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
-    },
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-      ["<Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_next_item()
-        elseif luasnip.expand_or_jumpable() then
-          luasnip.expand_or_jump()
-        elseif has_words_before() then
-          cmp.complete()
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-      ["<S-Tab>"] = cmp.mapping(function(fallback)
-        if cmp.visible() then
-          cmp.select_prev_item()
-        elseif luasnip.jumpable(-1) then
-          luasnip.jump(-1)
-        else
-          fallback()
-        end
-      end, { "i", "s" }),
-    }),
-    sources = cmp.config.sources({
-      { name = 'nvim_lsp' },
-      -- { name = 'vsnip' }, -- For vsnip users.
-      { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-      { name = 'path' },
-    }, {
-      { name = 'buffer' },
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' }
+  }, {
+    { name = 'cmdline' }
+  })
+})
+
+-- Setup lspconfig.
+
+local capabilities = require("cmp_nvim_lsp").default_capabilities()
+capabilities.textDocument.completion.completionItem.snippetSupport = true
+
+local lspconfig = require('lspconfig');
+
+lspconfig.tsserver.setup {
+  capabilities = capabilities,
+}
+lspconfig.eslint.setup{
+  capabilities = capabilities,
+  on_attach = function (client, bufnr) 
+    vim.api.nvim_create_autocmd("BufWritePre", {
+      buffer = bufnr,
+      command = "EslintFixAll",
     })
-  })
-
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'cmp_git' }, -- You can specify the `cmp_git` source if you were installed it.
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline('/', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-  -- Setup lspconfig.
-  local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  capabilities.textDocument.completion.completionItem.snippetSupport = true
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  require'lspconfig'.tsserver.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  require'lspconfig'.eslint.setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  require'lspconfig'.cssls.setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  require'lspconfig'.html.setup{
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  require'lspconfig'.jsonls.setup {
-    capabilities = capabilities,
-    on_attach = on_attach,
-  }
-  require'lspconfig'.yamlls.setup {
-    settings = {
-      yaml = {
-        schemaStore = {
-          url = "https://www.schemastore.org/api/json/catalog.json",
-          enable = true,
-        }
+  end,
+}
+lspconfig.cssls.setup{
+  capabilities = capabilities,
+}
+lspconfig.cssmodules_ls.setup{
+  capabilities = capabilities,
+}
+lspconfig.html.setup{
+  capabilities = capabilities,
+}
+lspconfig.jsonls.setup {
+  capabilities = capabilities,
+}
+lspconfig.yamlls.setup {
+  capabilities = capabilities,
+  settings = {
+    yaml = {
+      schemaStore = {
+        url = "https://www.schemastore.org/api/json/catalog.json",
+        enable = true,
       }
-    },
-    on_attach = on_attach
-  }
-
-  require("mason").setup()
-  require("mason-lspconfig").setup({
-    ensure_installed = {
-      "tsserver",
-      "eslint",
-      "cssls",
-      "html",
-      "jsonls",
-      "yamlls"
     }
-  })
+  },
+}
+lspconfig.stylelint_lsp.setup{
+  capabilities = capabilities,
+  settings = {
+    stylelintplus = {
+      autoFixOnSave = true
+    }
+  }
+}
+
+require("mason").setup()
+require("mason-lspconfig").setup({
+  ensure_installed = {
+    "tsserver",
+    "eslint",
+    "cssls",
+    "cssmodules_ls",
+    "html",
+    "jsonls",
+    "yamlls",
+    "stylelint_lsp"
+  }
+})
 
 EOF
-
-autocmd BufWritePre *.tsx,*.ts,*.jsx,*.js EslintFixAll
