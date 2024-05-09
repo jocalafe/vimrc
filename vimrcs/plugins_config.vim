@@ -269,6 +269,7 @@ require'nvim-treesitter.configs'.setup {
     "javascript",
     "typescript",
     "tsx",
+    "hcl"
   },
 }
 EOF
@@ -321,21 +322,6 @@ vim.diagnostic.config({
         source = "if_many",
         signs = false,
     },
-    float = {
-        severity_sort = true,
-        source = "if_many",
-        border = "rounded",
-        prefix = function(diagnostic)
-            local diag_to_format = {
-                [vim.diagnostic.severity.ERROR] = { "Error", "LspDiagnosticsDefaultError" },
-                [vim.diagnostic.severity.WARN] = { "Warning", "LspDiagnosticsDefaultWarning" },
-                [vim.diagnostic.severity.INFO] = { "Info", "LspDiagnosticsDefaultInfo" },
-                [vim.diagnostic.severity.HINT] = { "Hint", "LspDiagnosticsDefaultHint" },
-            }
-            local res = diag_to_format[diagnostic.severity]
-            return string.format("(%s) ", res[1]), res[2]
-        end,
-    },
     severity_sort = true,
 })
 vim.o.updatetime = 250
@@ -362,7 +348,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.keymap.set('n', 'gd', vim.lsp.buf.definition, opts)
     vim.keymap.set('n', 'K', vim.lsp.buf.hover, opts)
     vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, opts)
-    vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, opts)
     vim.keymap.set('n', '<leader>D', vim.lsp.buf.type_definition, opts)
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, opts)
     vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action, opts)
@@ -396,8 +381,8 @@ cmp.setup({
     end,
   },
   window = {
-    -- completion = cmp.config.window.bordered(),
-    -- documentation = cmp.config.window.bordered(),
+    completion = cmp.config.window.bordered(),
+    documentation = cmp.config.window.bordered(),
   },
   mapping = cmp.mapping.preset.insert({
     ['<C-b>'] = cmp.mapping.scroll_docs(-4),
@@ -481,6 +466,9 @@ lspconfig.eslint.setup{
     })
   end,
 }
+lspconfig.vimls.setup{
+  capabilities = capabilities,
+}
 lspconfig.cssls.setup{
   capabilities = capabilities,
 }
@@ -491,6 +479,9 @@ lspconfig.html.setup{
   capabilities = capabilities,
 }
 lspconfig.jsonls.setup {
+  capabilities = capabilities,
+}
+lspconfig.pyright.setup{
   capabilities = capabilities,
 }
 lspconfig.yamlls.setup {
@@ -512,10 +503,15 @@ lspconfig.stylelint_lsp.setup{
     }
   }
 }
+lspconfig.terraformls.setup{
+  capabilities = capabilities,
+}
+lspconfig.tflint.setup{}
 
 require("mason").setup()
 require("mason-lspconfig").setup({
   ensure_installed = {
+    "vimls",
     "tsserver",
     "eslint",
     "cssls",
@@ -523,7 +519,10 @@ require("mason-lspconfig").setup({
     "html",
     "jsonls",
     "yamlls",
-    "stylelint_lsp"
+    "pyright",
+    "stylelint_lsp",
+    "terraformls",
+    "tflint",
   }
 })
 
